@@ -33,7 +33,7 @@ id -u "$app" &>/dev/null || sudo adduser "$app" \
 # Install the app
 DESTDIR="/opt/"${app}
 install_haste $DESTDIR
-mkdir -p $DATA_PATH
+sudo mkdir -p $DATA_PATH
 sudo chown -R "$app":"$app" $DESTDIR $DATA_PATH
 
 # Configure haste with config.js file
