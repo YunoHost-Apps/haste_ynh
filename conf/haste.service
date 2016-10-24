@@ -1,0 +1,16 @@
+[Unit]
+Description=Haste is an open-source pastebin software written in node.js
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+User=haste
+Group=haste
+WorkingDirectory=/opt/haste
+ExecStart=npm start
+Restart=always
+Environment=USER=haste HOME=/opt/haste
+
+[Install]
+WantedBy=multi-user.target

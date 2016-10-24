@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# Exit on command errors and treat unset variables as an error
+set -eu
+
+app=${YNH_APP_INSTANCE_NAME:-haste}
+
+# Retrieve arguments
+domain=$YNH_APP_ARG_DOMAIN
+path=$YNH_APP_ARG_PATH
+is_public=$YNH_APP_ARG_IS_PUBLIC
+
+DATA_PATH="/home/yunohost.app/"$app
+
+# Load common variables
+source ./_common.sh
+
+# Source YunoHost helpers
+source /usr/share/yunohost/helpers
+
+# Save app settings
+ynh_app_setting_set "$app" is_public "$is_public"
+
+# Check domain/path availability
+sudo yunohost app checkurl "${domain}${path}" -a "$app" \
+    || ynh_die "Path not available: ${domain}${path}"
+
+# Add user
+id -g "$app" &>/dev/null || sudo addgroup "$app" --system --quiet
+id -u "$app" &>/dev/null || sudo adduser "$app" \
+    --ingroup "$app" --system --quiet --shell /bin/bash
+
+# Install the app
+DESTDIR="/opt/"${app}
+install_haste $DESTDIR
+mkdir -p $DATA_PATH
+sudo chown -R "$app":"$app" $DESTDIR $DATA_PATH
+
+# Configure haste with config.js file
+sudo cp ../conf/config.js "$DESTDIR"/config.js
+sudo sed -i "s@YNH_DATA_PATH@$DATA_PATH@g" "$DESTDIR"/config.js
+
+# Configure init script
+sudo cp ../conf/haste.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable "$app".service
+
+# Start Haste
+sudo systemctl start "$app".service
+
+# Add Haste to YunoHost's monitored services
+sudo yunohost service add "$app" --log /var/log/"$app"/"$app".log
+
+# Modify Nginx configuration file and copy it to Nginx conf directory
+sed -i "s@PATHTOCHANGE@${path%/}@g" ../conf/nginx.conf
+if [ "$path" = "/" ]
+then
+    sed -i "s@COMMENT_IF_ROOT@#@g" ../conf/nginx.conf
+else
+    sed -i "s@COMMENT_IF_ROOT@@g" ../conf/nginx.conf
+fi
+sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/"$app".conf
+
+# If app is public, add url to SSOWat conf as skipped_uris
+if [[ $is_public -eq 1 ]]; then
+  # unprotected_uris allows SSO credentials to be passed anyway.
+  ynh_app_setting_set "$app" unprotected_uris "/"
+fi
+
+# Reload services
+sudo systemctl reload nginx.service
