@@ -8,7 +8,7 @@ Type=simple
 User=haste
 Group=haste
 WorkingDirectory=/opt/haste
-ExecStart=npm start
+ExecStart=/usr/bin/npm start
 Restart=always
 Environment=USER=haste HOME=/opt/haste
 
