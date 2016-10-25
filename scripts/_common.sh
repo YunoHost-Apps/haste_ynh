@@ -78,11 +78,11 @@ pre_inst_haste() {
 # usage: install_haste DESTDIR
 install_haste() {
   local DOMAIN=$1
-  local PATH=$2
+  local YNH_PATH=$2
   local IS_PUBLIC=$3
 
   check_or_install_npm
-  pre_inst_haste
+  pre_inst_haste none
 
 	# install haste
 	current_dir=$(pwd)
@@ -98,7 +98,7 @@ install_haste() {
   sudo sed -i "s@YNH_DATA_PATH@$DATA_PATH@g" "$DESTDIR"/config.js
 
   # Modify Nginx configuration file and copy it to Nginx conf directory
-  sed -i "s@PATHTOCHANGE@${path%/}@g" ../conf/nginx.conf
+  sed -i "s@PATHTOCHANGE@${YNH_PATH%/}@g" ../conf/nginx.conf
   if [ "$path" = "/" ]
   then
       sed -i "s@COMMENT_IF_ROOT@#@g" ../conf/nginx.conf
