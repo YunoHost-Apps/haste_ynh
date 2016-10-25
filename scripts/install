@@ -15,6 +15,11 @@ is_public=$YNH_APP_ARG_IS_PUBLIC
 sudo yunohost app checkurl "${domain}${path}" -a "$app" \
     || ynh_die "Path not available: ${domain}${path}"
 
+if ! [ "$path" = "/" ]
+then
+    ynh_die "Path must be /"
+fi
+
 # Save app settings
 ynh_app_setting_set "$app" is_public "$is_public"
 

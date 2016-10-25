@@ -23,9 +23,10 @@ source /usr/share/yunohost/helpers
 #
 
 check_or_install_npm() {
-  if ! dpkg -s npm | grep "installed" > /dev/null 2>&1; then
+  if ! dpkg -s npm | grep "installed" > /dev/null 2>&1 \
+       || dpkg -s nodejs-legacy | grep "installed" > /dev/null 2>&1; then
     sudo apt-get update
-    sudo apt-get install -y npm
+    sudo apt-get install -y npm nodejs-legacy
   fi
 }
 
@@ -99,12 +100,6 @@ install_haste() {
 
   # Modify Nginx configuration file and copy it to Nginx conf directory
   sed -i "s@PATHTOCHANGE@${YNH_PATH%/}@g" ../conf/nginx.conf
-  if [ "$path" = "/" ]
-  then
-      sed -i "s@COMMENT_IF_ROOT@#@g" ../conf/nginx.conf
-  else
-      sed -i "s@COMMENT_IF_ROOT@@g" ../conf/nginx.conf
-  fi
   sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/"$app".conf
 
   # If app is public, add url to SSOWat conf as skipped_uris
