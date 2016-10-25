@@ -24,7 +24,7 @@ source /usr/share/yunohost/helpers
 
 check_or_install_npm() {
   if ! dpkg -s npm | grep "installed" > /dev/null 2>&1 \
-       || dpkg -s nodejs-legacy | grep "installed" > /dev/null 2>&1; then
+       || ! dpkg -s nodejs-legacy | grep "installed" > /dev/null 2>&1; then
     sudo apt-get update
     sudo apt-get install -y npm nodejs-legacy
   fi
