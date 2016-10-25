@@ -6,22 +6,22 @@ set -eu
 # Load common variables and functions
 source ./_common.sh
 
-# Retrieve arguments
-domain=$YNH_APP_ARG_DOMAIN
-path=$YNH_APP_ARG_PATH
-is_public=$YNH_APP_ARG_IS_PUBLIC
+# Retrieve old app settings
+domain=$(ynh_app_setting_get "$app" domain)
+path=$(ynh_app_setting_get "$app" path)
+is_public=$(ynh_app_setting_get "$app" is_public)
 
 # Check domain/path availability
 sudo yunohost app checkurl "${domain}${path}" -a "$app" \
     || ynh_die "Path not available: ${domain}${path}"
 
-# Save app settings
-ynh_app_setting_set "$app" is_public "$is_public"
+pre_inst_haste backup
 
-# Install the app
-install_haste $domain $path $is_public
+# Restore NGINX configuration
+sudo cp -a ./nginx.conf "/etc/nginx/conf.d/${domain}.d/${app}.conf"
 
-# Start Haste
+# Restart webserver and app
+sudo systemctl reload nginx.service
 sudo systemctl start "$app".service
 
 # Add Haste to YunoHost's monitored services

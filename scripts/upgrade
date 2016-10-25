@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Exit on command errors and treat unset variables as an error
+set -eu
+
+# Load common variables and functions
+source ./_common.sh
+
+# Retrieve arguments
+domain=$(ynh_app_setting_get "$app" domain)
+path=$(ynh_app_setting_get "$app" path)
+is_public=$(ynh_app_setting_get "$app" is_public)
+
+# Install the app
+install_haste $domain $path $is_public
+
+# Start Haste
+sudo systemctl restart "$app".service

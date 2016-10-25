@@ -6,7 +6,7 @@
         "en": "Haste is an open-source pastebin software written in node.js",
         "fr": "Haste is an open-source pastebin software written in node.js"
     },
-    "url": "https://example.com",
+    "url": "https://github.com/seejohnrun/haste-server",
     "license": "free",
     "maintainer": {
         "name": "mbugeia",

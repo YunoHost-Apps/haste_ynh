@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Exit on command errors and treat unset variables as an error
+set -eu
+
+# Load common variables and functions
+source ./_common.sh
+
+domain=$(ynh_app_setting_get "$app" domain)
+
+# Copy the app source and data files
+ynh_backup "$DESTDIR" "www"
+ynh_backup "$DATA_PATH" "data"
+
+# Copy the conf files
+mkdir ./conf
+ynh_backup "/etc/nginx/conf.d/${domain}.d/${app}.conf" "conf/nginx.conf"
+ynh_backup "/etc/systemd/system/${app}.service" "conf/systemd.service"
+ynh_backup "/usr/bin/${app}" "conf/haste.sh"
+
+# Copy NGINX configuration
+ynh_backup "/etc/nginx/conf.d/${domain}.d/${app}.conf" "nginx.conf"

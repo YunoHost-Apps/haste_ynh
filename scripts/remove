@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# See comments in install script
-app=${YNH_APP_INSTANCE_NAME:-haste}
+# Exit on command errors and treat unset variables as an error
+set -eu
 
-# Source YunoHost helpers
-source /usr/share/yunohost/helpers
+# Load common variables and functions
+source ./_common.sh
 
 # Retrieve app settings
 domain=$(ynh_app_setting_get "$app" domain)
@@ -14,10 +14,6 @@ sudo systemctl stop "$app".service
 
 # Remove sources
 sudo rm -rf "/opt/"${app}
-
-# Remove post-receive hook
-repo_path="/home/gogs/repositories/"$gogsrepo".git"
-sudo rm -f $repo_path"/hooks/post-receive"
 
 # Remove nginx configuration file
 [[ -n $domain ]] && sudo rm -f "/etc/nginx/conf.d/${domain}.d/${app}.conf"
