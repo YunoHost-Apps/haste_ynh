@@ -1,8 +1,6 @@
 #!/bin/bash
 
-set -eu
-
-PASTE_URL="https://YNH_HASTE_URL"
+PASTE_URL="YNH_HASTE_URL"
 
 haste () {
 	local output returnfile contents
@@ -33,10 +31,10 @@ haste () {
 		then
 		contents=$(cat $1)
 	fi
-	output=$(curl -# -f -XPOST "http://"${PASTE_URL}"/documents" -d"$contents")
+	output=$(curl -# -f -k -XPOST "https://"${PASTE_URL}"/documents" -d"$contents")
 	if (( $? == 0 )) && [[ $output =~ \"key\" ]]
 		then
-		returnfile=$(sed 's/^.*"key":"/http:\/\/'${PASTE_URL}'\//;s/".*$//' <<< "$output")
+		returnfile=$(sed 's/^.*"key":"/https:\/\/'${PASTE_URL}'\//;s/".*$//' <<< "$output")
 		if [[ -n $returnfile ]]
 			then
 			echo "$returnfile"
