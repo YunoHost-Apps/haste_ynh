@@ -15,6 +15,17 @@ is_public=$(ynh_app_setting_get "$app" is_public)
 sudo yunohost app checkurl "${domain}${path}" -a "$app" \
     || ynh_die "Path not available: ${domain}${path}"
 
+# Check destination directory
+[[ -d $DESTDIR ]] && ynh_die \
+"The destination directory '$DESTDIR' already exists.\
+ You should safely delete it before restoring this app."
+
+ # Check configuration files
+ nginx_conf="/etc/nginx/conf.d/${domain}.d/${app}.conf"
+ [[ -f $nginx_conf ]] && ynh_die \
+ "The NGINX configuration already exists at '${nginx_conf}'.
+ You should safely delete it before restoring this app."
+
 pre_inst_haste backup
 
 # Restore NGINX configuration

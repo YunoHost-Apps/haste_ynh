@@ -35,17 +35,6 @@ pre_inst_haste() {
   local TMPDIR=$(mktemp -d)
   local HASTE_SOURCE=$1
 
-  # Check destination directory
-  [[ -d $DESTDIR ]] && ynh_die \
-  "The destination directory '$DESTDIR' already exists.\
-   You should safely delete it before restoring this app."
-
-   # Check configuration files
-   nginx_conf="/etc/nginx/conf.d/${domain}.d/${app}.conf"
-   [[ -f $nginx_conf ]] && ynh_die \
-   "The NGINX configuration already exists at '${nginx_conf}'.
-   You should safely delete it before restoring this app."
-
   haste_tarball="/tmp/haste.zip"
   rm -f "$haste_tarball"
   if [ "$HASTE_SOURCE" = "backup" ]
