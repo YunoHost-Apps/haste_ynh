@@ -1,5 +1,5 @@
 [Unit]
-Description=Haste is an open-source pastebin software written in node.js
+Description=Haste is an open-source pastebin software
 After=syslog.target
 After=network.target
 

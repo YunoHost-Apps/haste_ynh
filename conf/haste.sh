@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# sources from https://github.com/diethnis/standalones/blob/master/hastebin.sh
+
 PASTE_URL="YNH_HASTE_URL"
 
 haste () {

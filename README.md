@@ -1,13 +1,27 @@
-# Work In Progress : do not install in production
-
 # Haste for YunoHost
 
 Haste is an open-source pastebin software written in node.js.
-A publicly available version can be found at hastebin.com
 
+[Haste Github repository](https://github.com/seejohnrun/haste-server)
+
+A publicly available version can be found at [http://hastebin.com/](http://hastebin.com/)
 
 ## Requirements
 - Functionnal instance of [YunoHost](https://yunohost.org)
+
+## `haste` command
+
+With this package is included the `haste` command based on this:
+https://github.com/diethnis/standalones/blob/master/hastebin.sh
+
+This allow to pipe text to it and upload the text on your haste instance. You can also install it on your local computer by copying the file /usr/bin/haste on a computer that has bash and curl.
+
+```
+bash
+cat LICENSE | haste
+######################################################################## 100,0%
+https://haste.example.com/zuyejeduzu
+```
 
 ## Installation
 From command line:
@@ -25,4 +39,4 @@ From command line:
 
 ## License
 
-This package is published under MIT License
+Both Haste and this package are published under MIT License
