@@ -16,8 +16,7 @@ https://github.com/diethnis/standalones/blob/master/hastebin.sh
 
 This allow to pipe text to it and upload the text on your haste instance. You can also install it on your local computer by copying the file /usr/bin/haste on a computer that has bash and curl.
 
-```
-bash
+```bash
 cat LICENSE | haste
 ######################################################################## 100,0%
 https://haste.example.com/zuyejeduzu
@@ -35,7 +34,7 @@ From command line:
 
 ## Infos
 
-- [YunoHost forum thread](https://forum.yunohost.org/)
+- [YunoHost forum thread](https://forum.yunohost.org/t/haste-package-pastebin-software/2038)
 
 ## License
 
