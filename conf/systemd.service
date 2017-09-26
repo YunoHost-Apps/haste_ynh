@@ -5,12 +5,13 @@ After=network.target
 
 [Service]
 Type=simple
-User=haste
-Group=haste
-WorkingDirectory=/opt/haste
-ExecStart=/usr/bin/npm start
+User=__APP__
+Group=__APP__
+ExecStartPre=__NODEJS__
+WorkingDirectory=__FINALPATH__
+Environment="PATH=__ENV_PATH__"
+ExecStart=/opt/node_n/n/versions/node/__VERSION__/bin/npm start
 Restart=always
-Environment=USER=haste HOME=/opt/haste
 
 [Install]
 WantedBy=multi-user.target
