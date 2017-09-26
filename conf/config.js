@@ -10,14 +10,14 @@
   "staticMaxAge": 86400,
 
   "recompressStaticAssets": true,
-
+    
   "logging": [
     {
-      "level": "info",
+      "level": "verbose",
       "type": "Console",
       "colorize": true
     }
-  ],
+],
 
   "keyGenerator": {
     "type": "phonetic"
@@ -33,9 +33,12 @@
   },
 
   "storage": {
-    "type": "file",
-    "file": "YNH_DATA_PATH"
-  },
+    "type": "redis",
+    "host": "0.0.0.0",
+    "port": 6379,
+    "db": 2,
+    "expire": 2592000
+},
 
   "documents": {
     "about": "./about.md"
