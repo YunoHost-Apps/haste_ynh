@@ -46,7 +46,7 @@ CHECK_FINALPATH # Vérifie que le dossier de destination n'est pas déjà utilis
 
 ynh_app_setting_set $app domain "$domain"
 ynh_app_setting_set $app is_public "$is_public"
-ynh_app_setting_set $app path_url "$path_url"
+ynh_app_setting_set $app path "$path"
 
 #=================================================
 # STANDARD MODIFICATIONS
