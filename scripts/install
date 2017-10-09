@@ -27,17 +27,16 @@ is_public=$YNH_APP_ARG_IS_PUBLIC
 # CHECK IF THE APP CAN BE INSTALLED WITH THIS ARGS
 #=================================================
 
-if sudo yunohost domain list | grep -q $domain	# Vérifie la liste des domaines
-then	# Si le domaine existe dans Yunohost
-	if sudo yunohost app map | grep -q $domain	# Vérifie la liste des apps par domaine
-	then 	# Si une app est installée sur ce domaine.
-		WARNING echo "An app is already installed on the domain $domain. cryptpad needs a whole domain or subdomain to himself."
-	fi
-fi
+final_path=/var/www/$app
+test ! -e "$final_path" || ynh_die "This path already contains a folder"
 
-path_url=$(ynh_normalize_url_path $path_url)	# Check and normalize path
-CHECK_DOMAINPATH	# Vérifie la disponibilité du path et du domaine.
-CHECK_FINALPATH # Vérifie que le dossier de destination n'est pas déjà utilisé.
+# Normalize the url path syntax
+path_url=$(ynh_normalize_url_path $path_url)
+
+# Check web path availability
+ynh_webpath_available $domain $path_url
+# Register (book) web path
+ynh_webpath_register $app $domain $path_url
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
