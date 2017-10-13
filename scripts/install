@@ -100,7 +100,7 @@ sudo chmod 755 $final_path -R
 # Modify Nginx configuration file and copy it to Nginx conf directory
 #=================================================
 
-ynh_nginx_config
+ynh_add_nginx_config
 
 #=================================================
 # ADD SYSTEMD SERVICE
@@ -109,7 +109,7 @@ ynh_nginx_config
 ynh_replace_string "__NODE__" "$nodejs_path" "../conf/systemd.service"
 ynh_replace_string "__NODEJS__" "$nodejs_use_version" "../conf/systemd.service"
 ynh_replace_string "__ENV_PATH__" "$PATH" "../conf/systemd.service"
-ynh_systemd_config
+ynh_add_systemd_config
 
 #=================================================
 # INSTALL HASTEBIN
