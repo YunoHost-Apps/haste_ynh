@@ -124,8 +124,7 @@ npm install
 # Configure haste with config.js file
 #=================================================
 
-  cp ../conf/config.js "$final_path"/config.js
-  sed -i "s@YNH_DATA_PATH@$DATA_PATH@g" "$final_path"/config.js
+  ynh_replace_string "YNH_DATA_PATH" "$DATAPATH" "$final_path/config.js"
 
 #=================================================
 # Add HASTE AS A BINARY FILE
