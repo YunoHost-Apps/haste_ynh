@@ -118,7 +118,7 @@ ynh_add_systemd_config
 script_dir="$PWD"
 pushd "$final_path"
 sudo chown -R $app: $final_path
-sudo_path npm install
+sudo npm install
 
 #=================================================
 # Configure haste with config.js file
