@@ -127,7 +127,7 @@ chown -R "$app":"$app" $final_path $DATA_PATH
 # Configure haste with config.js file
 #=================================================
 
-  ynh_replace_string "YNH_DATA_PATH" "$DATAPATH" "$final_path/config.js"
+  ynh_replace_string "YNH_DATA_PATH" "$DATA_PATH" "$final_path/config.js"
 
 #=================================================
 # Add HASTE AS A BINARY FILE
