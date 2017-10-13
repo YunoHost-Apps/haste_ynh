@@ -54,9 +54,11 @@ ynh_app_setting_set $app path_url "$path_url"
 # FIND AND OPEN A PORT
 #=================================================
 
-port=$(ynh_find_port 3000)	# Cherche un port libre.
+# Find a free port
+port=$(ynh_find_port 8095)
+# Open this port
+yunohost firewall allow --no-upnp TCP $port 2>&1
 ynh_app_setting_set $app port $port
-
 #=================================================
 # INSTALL NODEJS
 #=================================================
