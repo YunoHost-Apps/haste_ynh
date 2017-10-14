@@ -1,39 +1,124 @@
+
 #!/bin/bash
 
-# Exit on command errors and treat unset variables as an error
-set -eu
+#=================================================
+# GENERIC START
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
 
-# Load common variables and functions
-source ./_common.sh
+if [ ! -e _common.sh ]; then
+	# Get the _common.sh file if it's not in the current directory
+	cp ../settings/scripts/_common.sh ./_common.sh
+	chmod a+rx _common.sh
+fi
+source _common.sh
+source /usr/share/yunohost/helpers
 
-# Retrieve old app settings
-domain=$(ynh_app_setting_get "$app" domain)
-path=$(ynh_app_setting_get "$app" path)
-is_public=$(ynh_app_setting_get "$app" is_public)
+#=================================================
+# MANAGE SCRIPT FAILURE
+#=================================================
 
-# Check domain/path availability
-sudo yunohost app checkurl "${domain}${path}" -a "$app" \
-    || ynh_die "Path not available: ${domain}${path}"
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
 
-# Check destination directory
-[[ -d $DESTDIR ]] && ynh_die \
-"The destination directory '$DESTDIR' already exists.\
- You should safely delete it before restoring this app."
+#=================================================
+# LOAD SETTINGS
+#=================================================
 
- # Check configuration files
- nginx_conf="/etc/nginx/conf.d/${domain}.d/${app}.conf"
- [[ -f $nginx_conf ]] && ynh_die \
- "The NGINX configuration already exists at '${nginx_conf}'.
- You should safely delete it before restoring this app."
+app=$YNH_APP_INSTANCE_NAME
 
-pre_inst_haste backup
+domain=$(ynh_app_setting_get $app domain)
+path_url=$(ynh_app_setting_get $app path)
+final_path=$(ynh_app_setting_get $app final_path)
+db_name=$(ynh_app_setting_get $app db_name)
 
-# Restore NGINX configuration
-sudo cp -a ./nginx.conf "/etc/nginx/conf.d/${domain}.d/${app}.conf"
+#=================================================
+# CHECK IF THE APP CAN BE RESTORED
+#=================================================
 
-# Restart webserver and app
-sudo systemctl reload nginx.service
-sudo systemctl start "$app".service
+ynh_webpath_available $domain $path_url \
+	|| ynh_die "Path not available: ${domain}${path_url}"
+test ! -d $final_path \
+	|| ynh_die "There is already a directory: $final_path "
 
-# Add Haste to YunoHost's monitored services
-sudo yunohost service add "$app" --log /var/log/"$app"/"$app".log
+#=================================================
+# STANDARD RESTORATION STEPS
+#=================================================
+# RESTORE THE NGINX CONFIGURATION
+#=================================================
+
+ynh_restore_file "/etc/nginx/conf.d/$domain.d/$app.conf"
+
+#=================================================
+# RESTORE THE APP MAIN DIR
+#=================================================
+
+ynh_restore_file "$final_path"
+
+
+#=================================================
+# RECREATE THE DEDICATED USER
+#=================================================
+
+# Create the dedicated user (if not existing)
+ynh_system_user_create $app
+
+#=================================================
+# RESTORE USER RIGHTS
+#=================================================
+
+# Restore permissions on app files
+chown -R root: $final_path
+
+
+#=================================================
+# SPECIFIC RESTORATION
+#=================================================
+ynh_install_nodejs 4
+#=================================================
+# INSTALL HASTEBIN
+#=================================================
+
+ynh_use_nodejs
+script_dir="$PWD"
+pushd "$final_path"
+chown -R $app: $final_path
+npm install
+DATA_PATH="/home/yunohost.app/"$app
+mkdir -p $DATA_PATH
+chown -R "$app":"$app" $final_path $DATA_PATH
+
+
+#=================================================
+# ADVERTISE SERVICE IN ADMIN PANEL
+#=================================================
+
+yunohost service add $app --log "/var/log/$app/APP.log"
+
+#=================================================
+# RESTORE SYSTEMD
+#=================================================
+
+ynh_restore_file "/etc/systemd/system/$app.service"
+systemctl enable $app.service
+
+#=================================================
+# START HASTEBIN IN BACKGROUND
+#=================================================
+
+systemctl start $app
+
+#=================================================
+# RESTORE THE LOGROTATE CONFIGURATION
+#=================================================
+
+ynh_restore_file "/etc/logrotate.d/$app"
+
+#=================================================
+# GENERIC FINALIZATION
+#=================================================
+# RELOAD NGINX
+#=================================================
+
+systemctl reload nginx

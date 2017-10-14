@@ -1,7 +1,7 @@
 {
 
   "host": "127.0.0.1",
-  "port": 7777,
+  "port": __PORT__,
 
   "keyLength": 10,
 
@@ -10,14 +10,14 @@
   "staticMaxAge": 86400,
 
   "recompressStaticAssets": true,
-
+    
   "logging": [
     {
-      "level": "info",
+      "level": "verbose",
       "type": "Console",
       "colorize": true
     }
-  ],
+],
 
   "keyGenerator": {
     "type": "phonetic"
@@ -35,7 +35,7 @@
   "storage": {
     "type": "file",
     "file": "YNH_DATA_PATH"
-  },
+},
 
   "documents": {
     "about": "./about.md"
