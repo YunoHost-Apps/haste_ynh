@@ -14,7 +14,7 @@
         "url": "https://github.com/YunoHost-Apps/haste_ynh"
     },
     "requirements": {
-        "yunohost": ">>= 2.7.2"
+        "yunohost": ">= 2.7.2"
     },
     "multi_instance": false,
     "services": [
