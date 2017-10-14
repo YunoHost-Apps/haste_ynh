@@ -39,13 +39,6 @@ then
 	yunohost service remove $app
 fi
 
-#=================================================
-# REMOVE DEPENDENCIES
-#=================================================
-
-# Remove metapackage and its dependencies
-ynh_remove_app_dependencies
-
 
 #=================================================
 # REMOVE APP MAIN DIR
@@ -82,17 +75,6 @@ fi
 #=================================================
 # SPECIFIC REMOVE
 #=================================================
-# REMOVE THE CRON FILE
-#=================================================
-
-# Remove a cron file
-ynh_secure_remove "/etc/cron.d/$app"
-
-# Remove a directory securely
-ynh_secure_remove "/etc/$app/"
-
-# Remove the log files
-ynh_secure_remove "/var/log/$app/"
 
 #=================================================
 # GENERIC FINALIZATION
