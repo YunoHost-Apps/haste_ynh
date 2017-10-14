@@ -98,6 +98,14 @@ ynh_add_nginx_config
 ynh_system_user_create $app
 
 #=================================================
+# ADD SYSTEMD SERVICE
+#=================================================
+
+ynh_replace_string "__NODE__" "$nodejs_path" "../conf/systemd.service"
+ynh_replace_string "__NODEJS__" "$nodejs_use_version" "../conf/systemd.service"
+ynh_replace_string "__ENV_PATH__" "$PATH" "../conf/systemd.service"
+ynh_add_systemd_config
+#=================================================
 # INSTALL HASTEBIN
 #=================================================
 
@@ -109,12 +117,6 @@ npm install
 DATA_PATH="/home/yunohost.app/"$app
 mkdir -p $DATA_PATH
 chown -R "$app":"$app" $final_path $DATA_PATH
-
-#=================================================
-# Configure haste with config.js file
-#=================================================
-
-  ynh_replace_string "YNH_DATA_PATH" "$DATA_PATH" "$final_path/config.js"
 
 
 # Verify the checksum and backup the file if it's different
@@ -128,16 +130,6 @@ ynh_store_file_checksum "$final_path/config.js"
 
 # Use logrotate to manage app-specific logfile(s)
 ynh_use_logrotate
-
-#=================================================
-# ADD SYSTEMD SERVICE
-#=================================================
-
-ynh_replace_string "__NODE__" "$nodejs_path" "../conf/systemd.service"
-ynh_replace_string "__NODEJS__" "$nodejs_use_version" "../conf/systemd.service"
-ynh_replace_string "__ENV_PATH__" "$PATH" "../conf/systemd.service"
-ynh_add_systemd_config
-
 
 #=================================================
 # GENERIC FINALIZATION
