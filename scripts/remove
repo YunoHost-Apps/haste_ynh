@@ -46,12 +46,6 @@ fi
 # Remove metapackage and its dependencies
 ynh_remove_app_dependencies
 
-#=================================================
-# REMOVE THE MYSQL DATABASE
-#=================================================
-
-# Remove a database if it exists, along with the associated user
-ynh_mysql_remove_db $db_name $db_name
 
 #=================================================
 # REMOVE APP MAIN DIR
@@ -67,12 +61,6 @@ ynh_secure_remove "$final_path"
 # Remove the dedicated nginx config
 ynh_remove_nginx_config
 
-#=================================================
-# REMOVE PHP-FPM CONFIGURATION
-#=================================================
-
-# Remove the dedicated php-fpm config
-ynh_remove_fpm_config
 
 #=================================================
 # REMOVE LOGROTATE CONFIGURATION
