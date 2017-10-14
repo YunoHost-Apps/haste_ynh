@@ -121,6 +121,7 @@ script_dir="$PWD"
 pushd "$final_path"
 chown -R $app: $final_path
 npm install
+popd
 DATA_PATH="/home/yunohost.app/"$app
 mkdir -p $DATA_PATH
 chown -R "$app":"$app" $final_path $DATA_PATH
@@ -129,7 +130,7 @@ chown -R "$app":"$app" $final_path $DATA_PATH
 # Configure haste with config.js file
 #=================================================
 
-  ynh_replace_string "YNH_DATA_PATH" "$DATA_PATH" "$final_path/config.js"
+ynh_replace_string "YNH_DATA_PATH" "$DATA_PATH" "$final_path/config.js"
 
 #=================================================
 # ENABLE SERVICE IN ADMIN PANEL
@@ -152,6 +153,14 @@ if [ $is_public -eq 1 ];
 then
   ynh_app_setting_set "$app" unprotected_uris "/"
 fi
+
+#=================================================
+# Add HASTE AS A BINARY FILE
+#=================================================
+
+ynh_replace_string "YNH_HASTE_URL" "${DOMAIN}${path%/}" "../conf/haste.sh"
+sudo cp ../conf/haste.sh /usr/bin/"$app"
+sudo chmod +x /usr/bin/"$app"
 
 #=================================================
 # RELOAD NGINX
