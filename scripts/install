@@ -158,7 +158,7 @@ fi
 # Add HASTE AS A BINARY FILE
 #=================================================
 
-ynh_replace_string "YNH_HASTE_URL" "${DOMAIN}${path%/}" "../conf/haste.sh"
+ynh_replace_string "YNH_HASTE_URL" "${domain}${path%/}" "../conf/haste.sh"
 sudo cp ../conf/haste.sh /usr/bin/"$app"
 sudo chmod +x /usr/bin/"$app"
 
