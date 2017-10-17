@@ -1,50 +1,71 @@
 #!/bin/bash
 
-# sources from https://github.com/diethnis/standalones/blob/master/hastebin.sh
+set -e
+set -u
 
 PASTE_URL="YNH_HASTE_URL"
 
-haste () {
-	local output returnfile contents
-	if (( $# == 0 )) && [[ $(printf "%s" "$0" | wc -c) > 0 ]]
-		then
-		contents=$0
-	elif (( $# != 1 )) || [[ $1 =~ ^(-h|--help)$ ]]
-		then
-		echo "Usage: $0 FILE"
-		echo "Upload contents of plaintext document to hastebin."
-		echo "\nInvocation with no arguments takes input from stdin or pipe."
-		echo "Terminate stdin by EOF (Ctrl-D)."
-		return 1
-	elif [[ -e $1 && ! -f $1 ]]
-		then
-		echo "Error: Not a regular file."
-		return 1
-	elif [[ ! -e $1 ]]
-		then
-		echo "Error: No such file."
-		return 1
-	elif (( $(stat -c %s $1) > (512*1024**1) ))
-		then
-		echo "Error: File must be smaller than 512 KiB."
-		return 1
-	fi
-	if [[ -n "$contents" ]] || [[ $(printf "%s" "$contents" | wc -c) < 1 ]]
-		then
-		contents=$(cat $1)
-	fi
-	output=$(curl -# -f -k -XPOST "https://"${PASTE_URL}"/documents" -d"$contents")
-	if (( $? == 0 )) && [[ $output =~ \"key\" ]]
-		then
-		returnfile=$(sed 's/^.*"key":"/https:\/\/'${PASTE_URL}'\//;s/".*$//' <<< "$output")
-		if [[ -n $returnfile ]]
-			then
-			echo "$returnfile"
-			return 0
-		fi
-	fi
-	echo "Upload failed."
-	return 1
+_die() {
+  printf "Error: %s\n" "$*"
+  exit 1
 }
 
-haste
+check_dependencies() {
+  curl -V > /dev/null 2>&1 || _die "This script requires curl."
+}
+
+paste_data() {
+  json=$(curl -X POST -s -d "$1" "${PASTE_URL}/documents")
+  [[ -z "$json" ]] && _die "Unable to post the data to the server."
+
+  key=$(echo "$json" \
+    | python -c 'import json,sys;o=json.load(sys.stdin);print o["key"]' \
+        2>/dev/null)
+  [[ -z "$key" ]] && _die "Unable to parse the server response."
+
+  echo "${PASTE_URL}/${key}"
+}
+
+usage() {
+  printf "Usage: ${0} [OPTION]...
+Read from input stream and paste the data to your Haste server.
+For example, to paste the output of the YunoHost diagnosis, you can simply execute the following:
+  yunohost tools diagnosis | ${0}
+It will return the URL where you can access the pasted data.
+Options:
+  -h, --help   show this help message and exit
+"
+}
+
+main() {
+  # parse options
+  while [ $# -gt 0 ]; do
+    case "${1}" in
+      --help|-h)
+        usage
+        exit 0
+        ;;
+      *)
+        echo "Unknown parameter detected: ${1}" >&2
+        echo >&2
+        usage >&2
+        exit 1
+        ;;
+    esac
+
+    shift 1
+  done
+
+  # check input stream
+  read -t 0 || {
+    echo -e "Invalid usage: No input is provided.\n" >&2
+    usage
+    exit 1
+  }
+
+  paste_data "$(cat)"
+}
+
+check_dependencies
+
+main "${@}"
