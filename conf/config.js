@@ -34,7 +34,7 @@
 
   "storage": {
     "type": "file",
-    "file": "__YNH_DATA_PATH__"
+    "path": "__YNH_DATA_PATH__"
 },
 
   "documents": {

@@ -53,7 +53,8 @@ ynh_remove_nginx_config
 # REMOVE LOGROTATE CONFIGURATION
 #=================================================
 
-ynh_remove_logrotate
+# FIXME Currently, the log is only redirected to syslog.
+# ynh_remove_logrotate
 
 #=================================================
 # SPECIFIC REMOVE

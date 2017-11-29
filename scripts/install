@@ -62,7 +62,6 @@ ynh_app_setting_set $app path_url "$path_url"
 # Find a free port
 port=$(ynh_find_port 7777)
 ynh_app_setting_set $app port $port
-echo "port=$port" >&2
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -135,7 +134,8 @@ ynh_store_file_checksum "$final_path/config.js"
 # ADD HASTE AS A BINARY FILE
 #=================================================
 
-ynh_replace_string "__YNH_HASTE_URL__" "${domain}${path_url}" "../conf/haste.sh"
+ynh_replace_string "__YNH_HASTE_URL__" "${domain}${path_url%/}" "../conf/haste.sh"
+ynh_replace_string "__PORT__" "$port" "../conf/haste.sh"
 sudo cp ../conf/haste.sh /usr/bin/$app
 sudo chmod +x /usr/bin/"$app"
 echo "Please use 'cmd | $app' to paste the output of the command to your Haste server." >&2
@@ -154,10 +154,11 @@ chown -R $app "$data_path"
 # HANDLE LOG FILES AND SETUP LOGROTATE
 #=================================================
 
-mkdir -p /var/log/$app
-touch /var/log/$app/$app.log
-chown $app -R /var/log/$app
-ynh_use_logrotate
+# FIXME Currently, the log is only redirected to syslog.
+# mkdir -p /var/log/$app
+# touch /var/log/$app/$app.log
+# chown $app -R /var/log/$app
+# ynh_use_logrotate
 
 #=================================================
 # ENABLE SERVICE IN ADMIN PANEL
