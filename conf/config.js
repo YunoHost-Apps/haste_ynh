@@ -10,7 +10,7 @@
   "staticMaxAge": 86400,
 
   "recompressStaticAssets": true,
-    
+
   "logging": [
     {
       "level": "verbose",
@@ -34,7 +34,7 @@
 
   "storage": {
     "type": "file",
-    "file": "YNH_DATA_PATH"
+    "file": "__YNH_DATA_PATH__"
 },
 
   "documents": {

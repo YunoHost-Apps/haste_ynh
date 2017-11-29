@@ -3,7 +3,7 @@
 set -e
 set -u
 
-PASTE_URL="YNH_HASTE_URL"
+PASTE_URL="__YNH_HASTE_URL__"
 
 _die() {
   printf "Error: %s\n" "$*"
