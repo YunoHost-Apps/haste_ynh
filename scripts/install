@@ -13,7 +13,8 @@ source /usr/share/yunohost/helpers
 # MANAGE FAILURE OF THE SCRIPT
 #=================================================
 
-ynh_abort_if_errors # Active trap pour arrêter le script si une erreur est détectée.
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
@@ -34,6 +35,10 @@ test ! -e "$final_path" || ynh_die "This path already contains a folder"
 
 # Normalize the url path syntax
 path_url=$(ynh_normalize_url_path $path_url)
+
+if [ "$path_url" != "/" ]; then
+	ynh_die "Only / is allowed"
+fi
 
 # Check web path availability
 ynh_webpath_available $domain $path_url
@@ -56,14 +61,24 @@ ynh_app_setting_set $app path_url "$path_url"
 
 # Find a free port
 port=$(ynh_find_port 7777)
-# Open this port
-yunohost firewall allow --no-upnp TCP $port 2>&1
 ynh_app_setting_set $app port $port
+echo "port=$port" >&2
+
 #=================================================
-# INSTALL NODEJS
+# DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-ynh_install_nodejs 4 
+ynh_app_setting_set $app final_path $final_path
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source "$final_path"
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+
+# Create a dedicated nginx config
+ynh_add_nginx_config
+
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
@@ -73,43 +88,19 @@ ynh_system_user_create $app
 #=================================================
 # SPECIFIC SETUP
 #=================================================
-# HANDLE LOG FILES AND LOGROTATE
+# INSTALL NODEJS
 #=================================================
 
-# Créer le dossier de log
-mkdir -p /var/log/$app
-touch /var/log/$app/$app.log
-chown $app -R /var/log/$app
-
-# Setup logrotate
-ynh_use_logrotate
-
-
-#=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
-#=================================================
-
-final_path=/var/www/$app
-ynh_app_setting_set $app final_path $final_path
-ynh_setup_source $final_path
-
-# Set files ownership during installation
-chown $app: $final_path -R
-chmod 755 $final_path -R
-
-#=================================================
-# Modify Nginx configuration file and copy it to Nginx conf directory
-#=================================================
-
-ynh_add_nginx_config
+ynh_install_nodejs 4
 
 #=================================================
 # ADD SYSTEMD SERVICE
 #=================================================
 
-ynh_replace_string "__NODE__" "$nodejs_path" "../conf/systemd.service"
 ynh_replace_string "__NODEJS__" "$nodejs_use_version" "../conf/systemd.service"
 ynh_replace_string "__ENV_PATH__" "$PATH" "../conf/systemd.service"
+ynh_replace_string "__NODEPATH__" "$(dirname "$nodejs_path")" "../conf/systemd.service"
+
 ynh_add_systemd_config
 
 #=================================================
@@ -117,30 +108,65 @@ ynh_add_systemd_config
 #=================================================
 
 ynh_use_nodejs
-script_dir="$PWD"
-pushd "$final_path"
-chown -R $app: $final_path
-npm install
-popd
-DATA_PATH="/home/yunohost.app/"$app
-mkdir -p $DATA_PATH
-chown -R "$app":"$app" $final_path $DATA_PATH
+
+(cd "$final_path"
+chown -R $app: "$final_path"
+npm install)
 
 #=================================================
-# Configure haste with config.js file
+# CREATE DIRECTORY FOR DATA
 #=================================================
 
-ynh_replace_string "YNH_DATA_PATH" "$DATA_PATH" "$final_path/config.js"
+data_path="/home/yunohost.app/$app"
+mkdir -p "$data_path"
+
+#=================================================
+# CONFIGURE HASTE
+#=================================================
+
+cp ../conf/config.js "$final_path/config.js"
+ynh_replace_string "__PORT__" "$port" "$final_path/config.js"
+ynh_replace_string "__YNH_DATA_PATH__" "$data_path" "$final_path/config.js"
+
+# Calculate and store the config file checksum into the app settings
+ynh_store_file_checksum "$final_path/config.js"
+
+#=================================================
+# ADD HASTE AS A BINARY FILE
+#=================================================
+
+ynh_replace_string "__YNH_HASTE_URL__" "${domain}${path_url}" "../conf/haste.sh"
+sudo cp ../conf/haste.sh /usr/bin/$app
+sudo chmod +x /usr/bin/"$app"
+echo "Please use 'cmd | $app' to paste the output of the command to your Haste server." >&2
+
+#=================================================
+# GENERIC FINALIZATION
+#=================================================
+# SECURE FILES AND DIRECTORIES
+#=================================================
+
+chown -R root: $final_path
+chown -R $app "$final_path/static"
+chown -R $app "$data_path"
+
+#=================================================
+# HANDLE LOG FILES AND SETUP LOGROTATE
+#=================================================
+
+mkdir -p /var/log/$app
+touch /var/log/$app/$app.log
+chown $app -R /var/log/$app
+ynh_use_logrotate
 
 #=================================================
 # ENABLE SERVICE IN ADMIN PANEL
 #=================================================
 
-# Ajoute le service au monitoring de Yunohost.
 yunohost service add $app --log "/var/log/$app/$app.log"
 
 #=================================================
-# START HASTEBIN IN BACKGROUND
+# START HASTEBIN
 #=================================================
 
 systemctl start $app
@@ -151,16 +177,8 @@ systemctl start $app
 
 if [ $is_public -eq 1 ];
 then
-  ynh_app_setting_set "$app" unprotected_uris "/"
+  ynh_app_setting_set $app skipped_uris "/"
 fi
-
-#=================================================
-# Add HASTE AS A BINARY FILE
-#=================================================
-
-ynh_replace_string "YNH_HASTE_URL" "${domain}${path_url%/}" "../conf/haste.sh"
-sudo cp ../conf/haste.sh /usr/bin/"$app"
-sudo chmod +x /usr/bin/"$app"
 
 #=================================================
 # RELOAD NGINX

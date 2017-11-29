@@ -16,8 +16,6 @@ source /usr/share/yunohost/helpers
 app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get $app domain)
-port=$(ynh_app_setting_get $app port)
-db_name=$(ynh_app_setting_get $app db_name)
 final_path=$(ynh_app_setting_get $app final_path)
 
 #=================================================
@@ -39,42 +37,43 @@ then
 	yunohost service remove $app
 fi
 
-
 #=================================================
 # REMOVE APP MAIN DIR
 #=================================================
 
-# Remove the app directory securely
 ynh_secure_remove "$final_path"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
 
-# Remove the dedicated nginx config
 ynh_remove_nginx_config
-
 
 #=================================================
 # REMOVE LOGROTATE CONFIGURATION
 #=================================================
 
-# Remove the app-specific logrotate config
 ynh_remove_logrotate
-
-#=================================================
-# CLOSE A PORT
-#=================================================
-
-if yunohost firewall list | grep -q "\- $port$"
-then
-	echo "Close port $port"
-	yunohost firewall disallow TCP $port 2>&1
-fi
 
 #=================================================
 # SPECIFIC REMOVE
 #=================================================
+# REMOVE HASTE BINARY
+#=================================================
+
+ynh_secure_remove "/usr/bin/$app"
+
+#=================================================
+# REMOVE DATADIR DIRECTORY
+#=================================================
+
+ynh_secure_remove "$data_path"
+
+#=================================================
+# REMOVE NODEJS
+#=================================================
+
+ynh_remove_nodejs
 
 #=================================================
 # GENERIC FINALIZATION
