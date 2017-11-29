@@ -67,7 +67,7 @@ ynh_secure_remove "/usr/bin/$app"
 # REMOVE DATADIR DIRECTORY
 #=================================================
 
-ynh_secure_remove "$data_path"
+ynh_secure_remove "/home/yunohost.app/$app"
 
 #=================================================
 # REMOVE NODEJS
