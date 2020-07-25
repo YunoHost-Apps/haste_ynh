@@ -92,7 +92,7 @@ fi
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --time --weight=1
+ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=2
 
 # Create a dedicated nginx config
 ynh_add_nginx_config
@@ -120,8 +120,6 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 pushd "$final_path" || ynh_die
 	ynh_use_nodejs
 	ynh_exec_warn_less ynh_npm install
-	# ynh_npm cache clean
-	# ynh_npm update
 popd || ynh_die
 
 #=================================================
@@ -160,6 +158,10 @@ ynh_replace_string --match_string="__YNH_DATA_PATH__" --replace_string="$data_pa
 # Recalculate and store the config file checksum into the app settings
 ynh_store_file_checksum "$final_path/config.js"
 
+# Replace ajax.googleapis by local file
+cp ../sources/jquery.min.js "$final_path/static/jquery.min.js"
+ynh_replace_string --match_string="jquery.min.js" --replace_string="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" --target_file="$final_path/static/jquery.min.js"
+
 #=================================================
 # UPGRADE HASTE BINARY
 #=================================================
@@ -191,10 +193,10 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$ap
 # SETUP SSOWAT
 #=================================================
 
-if [ $is_public -eq 1 ];
-then
-  ynh_app_setting_set $app skipped_uris "/"
-fi
+# if [ $is_public -eq 1 ];
+# then
+#   ynh_app_setting_set $app skipped_uris "/"
+# fi
 
 #=================================================
 # RELOAD NGINX

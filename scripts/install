@@ -136,7 +136,7 @@ ynh_replace_string --match_string="__YNH_DATA_PATH__" --replace_string="$data_pa
 # Calculate and store the config file checksum into the app settings
 ynh_store_file_checksum "$final_path/config.js"
 
-# Replace ajax.googleapis.com by local
+# Replace ajax.googleapis by local file
 cp ../sources/jquery.min.js "$final_path/static/jquery.min.js"
 ynh_replace_string --match_string="jquery.min.js" --replace_string="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" --target_file="$final_path/static/jquery.min.js"
 
@@ -149,8 +149,6 @@ ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_f
 
 cp ../conf/haste.sh /usr/bin/$app
 chmod +x /usr/bin/$app
-
-echo "Please use 'cmd | $app' to paste the output of the command to your Haste server." >&2
 
 #=================================================
 # GENERIC FINALIZATION
@@ -190,10 +188,13 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$ap
 #=================================================
 # SETUP SSOWAT
 #=================================================
+ynh_script_progression --message="Configuring SSOwat..." --weight=1
 
-if [ $is_public -eq 1 ];
+if [ $is_public -eq 1 ]
 then
-  ynh_app_setting_set $app skipped_uris "/"
+	# Everyone can access the app.
+	# The "main" permission is automatically created before the install script.
+	 	ynh_permission_update --permission "main" --add "visitors"
 fi
 
 #=================================================
