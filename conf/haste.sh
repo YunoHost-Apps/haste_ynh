@@ -3,7 +3,8 @@
 set -e
 set -u
 
-PASTE_URL="__YNH_HASTE_URL__"
+LOCAL_PASTE_URL="http://127.0.0.1:__PORT__"
+PASTE_URL="https://__YNH_HASTE_URL__"
 
 _die() {
   printf "Error: %s\n" "$*"
@@ -15,7 +16,7 @@ check_dependencies() {
 }
 
 paste_data() {
-  json=$(curl -X POST -s -d "$1" "${PASTE_URL}/documents")
+  json=$(curl -kL -X POST -s -d "$1" "${LOCAL_PASTE_URL}/documents")
   [[ -z "$json" ]] && _die "Unable to post the data to the server."
 
   key=$(echo "$json" \
@@ -23,7 +24,7 @@ paste_data() {
         2>/dev/null)
   [[ -z "$key" ]] && _die "Unable to parse the server response."
 
-  echo "${PASTE_URL}/${key}"
+  echo "${PASTE_URL}${key}"
 }
 
 usage() {

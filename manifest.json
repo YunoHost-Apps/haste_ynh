@@ -3,10 +3,10 @@
 	"id": "haste",
 	"packaging_format": 1,
 	"description": {
-		"en": "Haste is an open-source pastebin software written in node.js",
-		"fr": "Haste is an open-source pastebin software written in node.js"
+		"en": "Open-source pastebin allowing to upload texts",
+		"fr": "Pastebin open-source permettant de mettre en ligne du texte"
 	},
-	"version": "f19c5d10498e214b8323fff9e5eab77cbb7eebff",
+	"version": "1.0~ynh1",
 	"url": "https://github.com/seejohnrun/haste-server",
 	"license": "MIT",
 	"maintainer": {
@@ -14,7 +14,7 @@
 		"email": "maxime.bugeia@gmail.com"
 	},
 	"requirements": {
-		"yunohost": ">= 2.7.2"
+		"yunohost": ">= 3.8.1"
 	},
 	"multi_instance": false,
 	"services": [
@@ -45,8 +45,8 @@
 				"name": "is_public",
 				"type": "boolean",
 				"ask": {
-					"en": "Is it a public site? (you won't be able to use haste command easily if not)",
-					"fr": "Est-ce un site publique ? (si non, vous ne pourrez pas utiliser la commande haste facilement)"
+					"en": "Is it a public site? (you won't be able to use Haste command easily if not)",
+					"fr": "Est-ce un site publique ? (si non, vous ne pourrez pas utiliser la commande Haste facilement)"
 				},
 				"default": true
 			}
