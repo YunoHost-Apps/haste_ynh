@@ -24,7 +24,7 @@ paste_data() {
         2>/dev/null)
   [[ -z "$key" ]] && _die "Unable to parse the server response."
 
-  echo "${PASTE_URL}${key}"
+  echo "${PASTE_URL}/${key}"
 }
 
 usage() {
