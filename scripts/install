@@ -139,7 +139,7 @@ ynh_store_file_checksum "$final_path/config.js"
 # Replace ajax.googleapis by local file
 cp ../sources/jquery.min.js "$final_path/static/jquery.min.js"
 
-ynh_replace_string --match_string="jquery.min.js" --replace_string="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" --target_file="$final_path/static/index.html"
+ynh_replace_string --match_string="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" --replace_string="jquery.min.js" --target_file="$final_path/static/index.html"
 
 #=================================================
 # ADD HASTE AS A BINARY FILE
