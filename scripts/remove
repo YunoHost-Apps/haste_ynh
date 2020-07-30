@@ -61,7 +61,6 @@ ynh_remove_nginx_config
 #=================================================
 ynh_script_progression --message="Removing logrotate configuration..." --weight=1
 
-# FIXME Currently, the log is only redirected to syslog.
 ynh_remove_logrotate
 
 #=================================================

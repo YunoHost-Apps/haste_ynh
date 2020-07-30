@@ -52,7 +52,6 @@ ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 # BACKUP LOGROTATE
 #=================================================
 
-# FIXME Currently, the log is only redirected to syslog.
 ynh_backup --src_path="/etc/logrotate.d/$app"
 
 #=================================================

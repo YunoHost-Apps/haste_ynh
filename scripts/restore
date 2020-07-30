@@ -86,15 +86,6 @@ systemctl enable $app.service
 ynh_restore_file "/home/yunohost.app/$app"
 
 #=================================================
-# HANDLE LOG FILES AND RESTORE LOGROTATE
-#=================================================
-
-# FIXME Currently, the log is only redirected to syslog.
-# mkdir -p /var/log/$app
-# touch /var/log/$app/$app.log
-# chown $app -R /var/log/$app
-
-#=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
