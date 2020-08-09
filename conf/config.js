@@ -1,6 +1,7 @@
 {
 
   "host": "127.0.0.1",
+  
   "port": __PORT__,
 
   "keyLength": 10,
@@ -40,5 +41,5 @@
   "documents": {
     "about": "./about.md"
   }
-
+  
 }
