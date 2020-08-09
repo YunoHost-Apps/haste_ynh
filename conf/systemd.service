@@ -1,16 +1,16 @@
 [Unit]
 Description=Haste is an open-source pastebin software
-After=syslog.target
-After=network.target
+After=network.target syslog.target
 
 [Service]
 Type=simple
 User=__APP__
 Group=__APP__
-ExecStartPre=__NODEJS__
 WorkingDirectory=__FINALPATH__
 Environment="PATH=__ENV_PATH__"
-ExecStart=__NODEPATH__/npm start
+ExecStart=__YNH_NPM__ start
+StandardOutput=append:/var/log/__APP__/__APP__.log
+StandardError=inherit
 Restart=always
 
 [Install]

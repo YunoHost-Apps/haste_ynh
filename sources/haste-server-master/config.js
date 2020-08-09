@@ -1,8 +1,7 @@
 {
 
-  "host": "127.0.0.1",
-  
-  "port": __PORT__,
+  "host": "0.0.0.0",
+  "port": 7777,
 
   "keyLength": 10,
 
@@ -18,7 +17,7 @@
       "type": "Console",
       "colorize": true
     }
-],
+  ],
 
   "keyGenerator": {
     "type": "phonetic"
@@ -34,12 +33,14 @@
   },
 
   "storage": {
-    "type": "file",
-    "path": "__YNH_DATA_PATH__"
-},
+    "type": "memcached",
+    "host": "127.0.0.1",
+    "port": 11211,
+    "expire": 2592000
+  },
 
   "documents": {
     "about": "./about.md"
   }
-  
+
 }
