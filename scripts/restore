@@ -93,6 +93,14 @@ chown -R $app: "/home/yunohost.app/$app"
 chmod +x /usr/bin/$app
 
 #=================================================
+# RESTORE HANDLE LOG FILES
+#=================================================
+
+mkdir -p /var/log/$app
+touch /var/log/$app/$app.log
+chown $app -R /var/log/$app
+
+#=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
 
