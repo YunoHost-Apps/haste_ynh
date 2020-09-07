@@ -33,8 +33,6 @@ domain=$(ynh_app_setting_get --app=$app --key=domain)
 ynh_print_info --message="Declaring files to be backed up..."
 
 #=================================================
-# STANDARD BACKUP STEPS
-#=================================================
 # BACKUP THE APP MAIN DIR
 #=================================================
 
@@ -46,8 +44,6 @@ ynh_backup --src_path="$final_path"
 
 ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 
-#=================================================
-# SPECIFIC BACKUP
 #=================================================
 # BACKUP LOGROTATE
 #=================================================
