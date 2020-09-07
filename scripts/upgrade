@@ -171,8 +171,6 @@ ynh_replace_string --match_string="__YNH_HASTE_URL__" --replace_string="${domain
 
 cp ../conf/haste.sh /usr/bin/$app
 
-chmod +x /usr/bin/$app
-
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
@@ -180,8 +178,9 @@ chmod +x /usr/bin/$app
 #=================================================
 
 chown -R root: $final_path
-chown -R $app "$final_path/static"
-chown -R $app "$data_path"
+chown -R $app: "$final_path/static"
+chown -R $app: "$data_path"
+chmod +x /usr/bin/$app
 
 #=================================================
 # START SYSTEMD SERVICE

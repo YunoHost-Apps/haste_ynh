@@ -121,9 +121,6 @@ data_path="/home/yunohost.app/${app}"
 # Create app folders
 mkdir -p "$data_path"
 
-# Give permission to the datadir
-chown -R $app:$app "$data_path"
-
 #=================================================
 # CONFIGURE HASTE
 #=================================================
@@ -149,7 +146,6 @@ ynh_replace_string --match_string="__YNH_HASTE_URL__" --replace_string="${domain
 ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="../conf/haste.sh"
 
 cp ../conf/haste.sh /usr/bin/$app
-chmod +x /usr/bin/$app
 
 #=================================================
 # GENERIC FINALIZATION
@@ -158,7 +154,9 @@ chmod +x /usr/bin/$app
 #=================================================
 
 chown -R root: $final_path
-chown -R $app "$final_path/static"
+chown -R $app: "$final_path/static"
+chown -R $app: "$data_path"
+chmod +x /usr/bin/$app
 
 #=================================================
 # HANDLE LOG FILES AND SETUP LOGROTATE

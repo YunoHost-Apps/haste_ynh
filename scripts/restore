@@ -13,9 +13,6 @@ source /usr/share/yunohost/helpers
 # MANAGE SCRIPT FAILURE
 #=================================================
 
-ynh_clean_setup () {
-	true
-}
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
@@ -61,7 +58,7 @@ ynh_restore_file --origin_path="$final_path"
 ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
 
 # Create the dedicated user (if not existing)
-ynh_system_user_create --username=$app
+ynh_system_user_create --username=$app --home_dir=$final_path
 
 #=================================================
 # SPECIFIC RESTORE
@@ -72,32 +69,47 @@ ynh_system_user_create --username=$app
 ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 
 #=================================================
-# RESTORE SYSTEMD
-#=================================================
-ynh_script_progression --message="Restoring the systemd configuration..." --weight=2
-
-ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
-systemctl enable $app.service
-
-#=================================================
 # RESTORE VARIOUS FILES
 #=================================================
 
 ynh_restore_file "/home/yunohost.app/$app"
 
 #=================================================
+# RESTORE BINARY
+#=================================================
+
+ynh_restore_file --origin_path="/usr/bin/$app"
+
+#=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
 chown -R root: $final_path
-chown -R $app "$final_path/static"
-chown -R $app "/home/yunohost.app/$app"
+chown -R $app: "$final_path/static"
+chown -R $app: "/home/yunohost.app/$app"
+chmod +x /usr/bin/$app
+
+#=================================================
+# RESTORE HANDLE LOG FILES
+#=================================================
+
+mkdir -p /var/log/$app
+touch /var/log/$app/$app.log
+chown $app -R /var/log/$app
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
 
 yunohost service add $app --description "Haste is an open-source pastebin software" --log "/var/log/$app/$app.log"
+
+#=================================================
+# RESTORE SYSTEMD
+#=================================================
+ynh_script_progression --message="Restoring the systemd configuration..." --weight=2
+
+ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
+systemctl enable $app.service
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -115,7 +127,7 @@ ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
-# RELOAD NGINX AND PHP-FPM
+# RELOAD NGINX
 #=================================================
 ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
