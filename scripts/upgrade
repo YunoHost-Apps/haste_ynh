@@ -183,6 +183,12 @@ chown -R $app: "$data_path"
 chmod +x /usr/bin/$app
 
 #=================================================
+# INTEGRATE SERVICE IN YUNOHOST
+#=================================================
+
+yunohost service add $app --description "Haste is an open-source pastebin software" --log "/var/log/$app/$app.log"
+
+#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=1
