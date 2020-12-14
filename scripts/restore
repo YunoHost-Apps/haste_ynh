@@ -101,7 +101,7 @@ chown $app -R /var/log/$app
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
 
-yunohost service add $app --description "Haste is an open-source pastebin software" --log "/var/log/$app/$app.log"
+yunohost service add $app --description="Haste is an open-source pastebin software" --log="/var/log/$app/$app.log"
 
 #=================================================
 # RESTORE SYSTEMD
