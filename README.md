@@ -1,7 +1,7 @@
 # Haste for YunoHost
 
 [![Integration level](https://dash.yunohost.org/integration/haste.svg)](https://dash.yunohost.org/appci/app/haste) ![](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)  
-[![Install Haste with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=haste)
+[![Install Haste with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=haste)
 
 *[Lire ce readme en français.](./README_fr.md)*
 
