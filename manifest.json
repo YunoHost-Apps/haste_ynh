@@ -10,8 +10,8 @@
 	"url": "https://github.com/seejohnrun/haste-server",
 	"license": "MIT",
 	"maintainer": {
-		"name": "mbugeia",
-		"email": "maxime.bugeia@gmail.com"
+		"name": "eric_G",
+		"email": ""
 	},
 	"requirements": {
 		"yunohost": ">= 4.0.0"
