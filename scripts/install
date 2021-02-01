@@ -51,7 +51,7 @@ ynh_app_setting_set --app=$app --key=path_url --value=$path_url
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
-ynh_script_progression --message="Configuring firewall..." --weight=2
+ynh_script_progression --message="Finding an available port..." --weight=2
 
 # Find an available port
 port=$(ynh_find_port --port=7777)
@@ -155,7 +155,7 @@ cp ../conf/haste.sh /usr/bin/$app
 
 chown -R root: $final_path
 chown -R $app: "$final_path/static"
-chown -R $app: "$data_path"
+chown -R $app: $data_path
 chmod +x /usr/bin/$app
 
 #=================================================
@@ -174,7 +174,7 @@ ynh_use_logrotate
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
 
-yunohost service add $app --description="Haste is an open-source pastebin software" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="Haste is a pastebin software" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -182,16 +182,16 @@ yunohost service add $app --description="Haste is an open-source pastebin softwa
 ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action=start --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring SSOwat..." --weight=1
+ynh_script_progression --message="Configuring permissions..." --weight=1
 
 if [ $is_public -eq 1 ]
 then
-	ynh_permission_update --permission "main" --add "visitors"
+	ynh_permission_update --permission="main" --add="visitors"
 fi
 
 #=================================================

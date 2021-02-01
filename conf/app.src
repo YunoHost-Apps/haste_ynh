@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/seejohnrun/haste-server/archive/677a22987adf0a364d8e03243d3ace20e11b4719.tar.gz
-SOURCE_SUM=69cbc631151e09792b83e32b9d6fde8a3eabe40bf252a5b9a7065228aae4e167
+SOURCE_URL=https://github.com/seejohnrun/haste-server/archive/5d2965ffc5d9b309ef6d4be9e8c2288c83d72c73.tar.gz
+SOURCE_SUM=099bf0cec59614f0f6151f0809c8580b85d5fe701892dda96263b8aee743d5d8
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
