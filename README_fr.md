@@ -28,7 +28,7 @@ Haste est un logiciel pastebin open-source écrit en node.js, facilement install
 ## Documentation
 
  * Documentation officielle: https://hastebin.com/about.md
- * Documentation YunoHost: Si une documentation spécifique est nécessaire, n'hésitez pas à contribuer.
+ * Documentation YunoHost: https://yunohost.org/fr/app_haste
 
 ## Caractéristiques spécifiques YunoHost
 
