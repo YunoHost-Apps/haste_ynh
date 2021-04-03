@@ -4,7 +4,7 @@ set -e
 set -u
 
 LOCAL_PASTE_URL="http://127.0.0.1:__PORT__"
-PASTE_URL="https://__YNH_HASTE_URL__"
+PASTE_URL="https://__HASTE_URL__"
 
 _die() {
   printf "Error: %s\n" "$*"
