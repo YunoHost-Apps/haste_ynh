@@ -39,8 +39,8 @@ Haste est un logiciel pastebin open-source écrit en node.js, facilement install
 
 #### Architectures supportées
 
-* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/haste%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/haste/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/haste%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/haste/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/haste.svg)](https://ci-apps.yunohost.org/ci/apps/haste/)
+* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/haste.svg)](https://ci-apps-arm.yunohost.org/ci/apps/haste/)
 
 ## Limitations
 
