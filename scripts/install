@@ -124,13 +124,7 @@ mkdir -p "$data_path"
 # CONFIGURE HASTE
 #=================================================
 
-cp ../conf/config.js "$final_path/config.js"
-
-ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="$final_path/config.js"
-ynh_replace_string --match_string="__YNH_DATA_PATH__" --replace_string="$data_path" --target_file="$final_path/config.js"
-
-# Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum "$final_path/config.js"
+ynh_add_config --template="../conf/config.js" --destination="$final_path/config.js"
 
 # Replace ajax.googleapis by local file
 cp ../sources/jquery.min.js "$final_path/static/jquery.min.js"
@@ -141,7 +135,7 @@ ynh_replace_string --match_string="https://ajax.googleapis.com/ajax/libs/jquery/
 # ADD HASTE AS A BINARY FILE
 #=================================================
 
-ynh_replace_string --match_string="__YNH_HASTE_URL__" --replace_string="${domain}${path_url%/}" --target_file="../conf/haste.sh"
+ynh_replace_string --match_string="__HASTE_URL__" --replace_string="${domain}${path_url%/}" --target_file="../conf/haste.sh"
 ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="../conf/haste.sh"
 
 cp ../conf/haste.sh /usr/bin/$app

@@ -125,8 +125,8 @@ ynh_use_logrotate --non-append
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
 
-ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH"    --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__YNH_NPM__"  --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__YNH_NPM__" --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
 
@@ -134,19 +134,9 @@ ynh_add_systemd_config
 # UPGRADE HASTE CONFIGURATION
 #=================================================
 
-# Verify the checksum and backup the file if it's different
-ynh_backup_if_checksum_is_different "$final_path/config.js"
-
-cp ../conf/config.js "$final_path/config.js"
-
 # Define app's data directory
-data_path="/home/yunohost.app/${app}"
-
-ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="$final_path/config.js"
-ynh_replace_string --match_string="__YNH_DATA_PATH__" --replace_string="$data_path" --target_file="$final_path/config.js"
-
-# Recalculate and store the config file checksum into the app settings
-ynh_store_file_checksum "$final_path/config.js"
+data_path="/home/yunohost.app/$app"
+ynh_add_config --template="../conf/config.js" --destination="$final_path/config.js"
 
 # Replace ajax.googleapis by local file
 cp ../sources/jquery.min.js "$final_path/static/jquery.min.js"
