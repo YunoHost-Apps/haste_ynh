@@ -25,7 +25,7 @@
   },
   "storage": {
     "type": "file",
-    "path": "__YNH_DATA_PATH__"
+    "path": "__DATA_PATH__"
 },
   "documents": {
     "about": "./about.md"
