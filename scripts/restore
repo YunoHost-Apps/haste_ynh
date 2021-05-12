@@ -26,6 +26,7 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
@@ -72,7 +73,7 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 # RESTORE VARIOUS FILES
 #=================================================
 
-ynh_restore_file "/home/yunohost.app/$app"
+ynh_restore_file "$data_path"
 
 #=================================================
 # RESTORE BINARY
@@ -84,9 +85,10 @@ ynh_restore_file --origin_path="/usr/bin/$app"
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-chown -R root: $final_path
-chown -R $app: "$final_path/static"
-chown -R $app: "/home/yunohost.app/$app"
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+chown -R $app: "$data_path"
 chmod +x /usr/bin/$app
 
 #=================================================

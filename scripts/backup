@@ -26,6 +26,7 @@ app=$YNH_APP_INSTANCE_NAME
 
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 domain=$(ynh_app_setting_get --app=$app --key=domain)
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
 #=================================================
 # DECLARE DATA AND CONF FILES TO BACKUP
@@ -54,7 +55,7 @@ ynh_backup --src_path="/etc/logrotate.d/$app"
 # BACKUP DATADIR DIRECTORY
 #=================================================
 
-ynh_backup --src_path="/home/yunohost.app/$app"
+ynh_backup --src_path="$data_path"
 
 #=================================================
 # BACKUP BINARY

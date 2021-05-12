@@ -95,8 +95,8 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 # ADD SYSTEMD SERVICE
 #=================================================
 
-ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH"    --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__YNH_NPM__"  --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__YNH_NPM__" --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
 
@@ -119,6 +119,7 @@ data_path="/home/yunohost.app/${app}"
 
 # Create app folders
 mkdir -p "$data_path"
+ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 
 #=================================================
 # CONFIGURE HASTE
@@ -135,10 +136,8 @@ ynh_replace_string --match_string="https://ajax.googleapis.com/ajax/libs/jquery/
 # ADD HASTE AS A BINARY FILE
 #=================================================
 
-ynh_replace_string --match_string="__HASTE_URL__" --replace_string="${domain}${path_url%/}" --target_file="../conf/haste.sh"
-ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="../conf/haste.sh"
-
-cp ../conf/haste.sh /usr/bin/$app
+haste_url="${domain}${path_url}"
+ynh_add_config --template="../conf/haste.sh" --destination="/usr/bin/$app"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -146,8 +145,9 @@ cp ../conf/haste.sh /usr/bin/$app
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-chown -R root: $final_path
-chown -R $app: "$final_path/static"
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 chown -R $app: $data_path
 chmod +x /usr/bin/$app
 

@@ -6,7 +6,7 @@
 		"en": "Open-source pastebin allowing to upload texts",
 		"fr": "Pastebin open-source permettant de mettre en ligne du texte"
 	},
-	"version": "0.1.0~ynh6",
+	"version": "0.1.0~ynh7",
 	"url": "https://github.com/seejohnrun/haste-server",
 	"license": "MIT",
 	"maintainer": {
@@ -18,7 +18,7 @@
 		"email": "maxime.bugeia@gmail.com"
 	}],
 	"requirements": {
-		"yunohost": ">= 4.1.7"
+		"yunohost": ">= 4.2.4"
 	},
 	"multi_instance": false,
 	"services": [
