@@ -84,7 +84,7 @@ then
 	ynh_script_progression --message="Upgrading source files..." --weight=7
 
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$final_path"
+	ynh_setup_source --dest_dir="$final_path" --keep="$final_path/config.js"
 fi
 
 #=================================================
@@ -141,9 +141,6 @@ ynh_add_systemd_config
 #=================================================
 # UPGRADE HASTE CONFIGURATION
 #=================================================
-
-# Define app's data directory
-ynh_add_config --template="../conf/config.js" --destination="$final_path/config.js"
 
 # Replace ajax.googleapis by local file
 cp ../sources/jquery.min.js "$final_path/static/jquery.min.js"
