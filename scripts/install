@@ -95,8 +95,8 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 # ADD SYSTEMD SERVICE
 #=================================================
 
-ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH"    --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__YNH_NPM__"  --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
+ynh_replace_string --match_string="__YNH_NPM__" --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
 
@@ -146,8 +146,9 @@ cp ../conf/haste.sh /usr/bin/$app
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-chown -R root: $final_path
-chown -R $app: "$final_path/static"
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 chown -R $app: $data_path
 chmod +x /usr/bin/$app
 

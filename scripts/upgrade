@@ -157,8 +157,9 @@ cp ../conf/haste.sh /usr/bin/$app
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-chown -R root: $final_path
-chown -R $app: "$final_path/static"
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 chown -R $app: $data_path
 chmod +x /usr/bin/$app
 
