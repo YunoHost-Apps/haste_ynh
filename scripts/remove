@@ -18,6 +18,7 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
 #=================================================
 # STANDARD REMOVE
@@ -75,7 +76,7 @@ ynh_secure_remove --file="/usr/bin/$app"
 # REMOVE DATADIR DIRECTORY
 #=================================================
 
-ynh_secure_remove --file="/home/yunohost.app/$app"
+ynh_secure_remove --file="$data_path"
 
 #=================================================
 # REMOVE NODEJS

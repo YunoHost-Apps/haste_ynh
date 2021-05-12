@@ -19,6 +19,7 @@ domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path_url)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
 #=================================================
 # CHECK VERSION
@@ -35,6 +36,13 @@ ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 if [ -z "$final_path" ]; then
 	final_path=/var/www/$app
 	ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+fi
+
+# If data_path doesn't exist, create it
+if [ -z "$data_path" ]; then
+	data_path="/home/yunohost.app/${app}"
+	mkdir -p "$data_path"
+	ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 fi
 
 # Cleaning legacy permissions
@@ -135,7 +143,6 @@ ynh_add_systemd_config
 #=================================================
 
 # Define app's data directory
-data_path="/home/yunohost.app/$app"
 ynh_add_config --template="../conf/config.js" --destination="$final_path/config.js"
 
 # Replace ajax.googleapis by local file
@@ -147,9 +154,8 @@ ynh_replace_string --match_string="https://ajax.googleapis.com/ajax/libs/jquery/
 # UPGRADE HASTE BINARY
 #=================================================
 
-ynh_replace_string --match_string="__YNH_HASTE_URL__" --replace_string="${domain}${path_url}" --target_file="../conf/haste.sh"
-
-cp ../conf/haste.sh /usr/bin/$app
+haste_url="${domain}${path_url}"
+ynh_add_config --template="../conf/haste.sh" --destination="/usr/bin/$app"
 
 #=================================================
 # GENERIC FINALIZATION

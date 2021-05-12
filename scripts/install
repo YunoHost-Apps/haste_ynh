@@ -119,6 +119,7 @@ data_path="/home/yunohost.app/${app}"
 
 # Create app folders
 mkdir -p "$data_path"
+ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 
 #=================================================
 # CONFIGURE HASTE
