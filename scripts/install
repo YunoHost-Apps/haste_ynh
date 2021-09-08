@@ -96,7 +96,6 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 #=================================================
 
 ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__YNH_NPM__" --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
 
@@ -104,10 +103,10 @@ ynh_add_systemd_config
 # INSTALL HASTEBIN
 #=================================================
 
-pushd "$final_path" || ynh_die
+pushd "$final_path"
 	ynh_use_nodejs
 	ynh_exec_warn_less ynh_npm install
-popd || ynh_die
+popd
 
 #=================================================
 # CREATE DIRECTORY FOR DATA
@@ -116,10 +115,14 @@ ynh_script_progression --message="Creating the data directory..."
 
 # Define app's data directory
 data_path="/home/yunohost.app/${app}"
+ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 
 # Create app folders
 mkdir -p "$data_path"
-ynh_app_setting_set --app=$app --key=data_path --value=$data_path
+
+chmod 750 "$data_path"
+chmod -R o-rwx "$data_path"
+chown -R $app:www-data "$data_path"
 
 #=================================================
 # CONFIGURE HASTE
@@ -148,7 +151,6 @@ ynh_add_config --template="../conf/haste.sh" --destination="/usr/bin/$app"
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
 chown -R $app:www-data "$final_path"
-chown -R $app: $data_path
 chmod +x /usr/bin/$app
 
 #=================================================
