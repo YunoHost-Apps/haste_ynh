@@ -115,10 +115,10 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 # UPGRADE NPM MODULES
 #=================================================
 
-pushd "$final_path" || ynh_die
+pushd "$final_path"
 	ynh_use_nodejs
 	ynh_exec_warn_less ynh_npm install
-popd || ynh_die
+popd
 
 #=================================================
 # SETUP LOGROTATE
@@ -134,7 +134,6 @@ ynh_use_logrotate --non-append
 ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
 
 ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
-ynh_replace_string --match_string="__YNH_NPM__" --replace_string="$ynh_npm" --target_file="../conf/systemd.service"
 
 ynh_add_systemd_config
 
@@ -163,7 +162,6 @@ ynh_add_config --template="../conf/haste.sh" --destination="/usr/bin/$app"
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
 chown -R $app:www-data "$final_path"
-chown -R $app: $data_path
 chmod +x /usr/bin/$app
 
 #=================================================
