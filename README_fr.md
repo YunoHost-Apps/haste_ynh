@@ -3,50 +3,31 @@
 [![Niveau d'intégration](https://dash.yunohost.org/integration/haste.svg)](https://dash.yunohost.org/appci/app/haste) ![](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)  
 [![Installer Haste avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=haste)
 
-*[Read this readme in english.](./README.md)* 
+*[Read this readme in english.](./README.md)*
+*[Lire ce readme en français.](./README_fr.md)*
 
-> *Ce package vous permet d'installer Haste rapidement et simplement sur un serveur YunoHost.  
-Si vous n'avez pas YunoHost, consultez [le guide](https://yunohost.org/#/install) pour apprendre comment l'installer.*
+> *Ce package vous permet d'installer Haste rapidement et simplement sur un serveur YunoHost.
+Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
 
 ## Vue d'ensemble
+
 Haste est un logiciel pastebin open-source écrit en node.js, facilement installable sur n'importe quel réseau. Le projet YunoHost utilise Haste comme pastebin pour le partage de log : [paste.yunohost.org](https://paste.yunohost.org/)
 
-**Version incluse :** 0.1.0 (7.10.2020)
+
+**Version incluse :** 0.1.0~ynh8
+
+**Démo :** http://hastebin.com/
 
 ## Captures d'écran
 
-![](sources/screenshot.png)
+![](./doc/screenshots/screenshot.png)
 
-## Démo
+## Avertissements / informations importantes
 
-* [Démo officielle](http://hastebin.com/)
-
-## Configuration
-
- * Comment configurer cette application: un fichier brut en SSH.
-
-## Documentation
-
- * Documentation officielle: https://hastebin.com/about.md
- * Documentation YunoHost: https://yunohost.org/fr/app_haste
-
-## Caractéristiques spécifiques YunoHost
-
-#### Support multi-utilisateur
+### Support multi-utilisateur
 
 * L'authentification LDAP et HTTP est-elle prise en charge ? **Non**
 * L'application peut-elle être utilisée par plusieurs utilisateurs ? **Oui**
-
-#### Architectures supportées
-
-* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/haste.svg)](https://ci-apps.yunohost.org/ci/apps/haste/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/haste.svg)](https://ci-apps-arm.yunohost.org/ci/apps/haste/)
-
-## Limitations
-
-* Limitations connues.
-
-## Informations additionnelles
 
 ## `haste` command
 
@@ -59,13 +40,13 @@ https://haste.example.com/zuyejeduzu
 
 Le [client Haste](https://github.com/seejohnrun/haste-client) est un client simple pour télécharger des données sur votre serveur Haste.
 
-## Liens
+## Documentations et ressources
 
- * Signaler un bug : https://github.com/YunoHost-Apps/haste_ynh/issues
- * Dépôt de l'application principale : https://github.com/seejohnrun/haste-server
- * Site web YunoHost : https://yunohost.org/
-
----
+* Site officiel de l'app : https://example.com
+* Documentation officielle utilisateur : https://hastebin.com/about.md
+* Dépôt de code officiel de l'app : https://github.com/seejohnrun/haste-server
+* Documentation YunoHost pour cette app : https://yunohost.org/app_haste
+* Signaler un bug : https://github.com/YunoHost-Apps/haste_ynh/issues
 
 ## Informations pour les développeurs
 
@@ -77,3 +58,5 @@ sudo yunohost app install https://github.com/YunoHost-Apps/haste_ynh/tree/testin
 ou
 sudo yunohost app upgrade haste -u https://github.com/YunoHost-Apps/haste_ynh/tree/testing --debug
 ```
+
+**Plus d'infos sur le packaging d'applications :** https://yunohost.org/packaging_apps
