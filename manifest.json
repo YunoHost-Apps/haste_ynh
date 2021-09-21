@@ -39,8 +39,7 @@
                 "help": {
                     "en": "Haste can only be installed in a root domain or subdomain",
                     "fr": "Haste ne peut être installé que dans un domaine racine ou un sous-domaine"
-                },
-				"example": "paste.example.com"
+                }
 			},
 			{
 				"name": "is_public",
