@@ -6,11 +6,11 @@
 		"en": "Open-source pastebin allowing to upload texts",
 		"fr": "Pastebin open-source permettant de mettre en ligne du texte"
 	},
-	"version": "0.1.0~ynh8",
+	"version": "0.1.0~ynh9",
 	"url": "http://hastebin.com/",
 	"upstream": {
         "license": "MIT",
-        "website": "https://example.com",
+        "website": "http://hastebin.com/",
         "demo": "http://hastebin.com/",
         "userdoc": "https://hastebin.com/about.md",
         "code": "https://github.com/seejohnrun/haste-server"
