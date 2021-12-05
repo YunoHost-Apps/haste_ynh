@@ -18,7 +18,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 Haste is an open-source pastebin software written in node.js, which is easily installable in any network. YunoHost Project uses Haste as pastebin for log sharing: [paste.yunohost.org](https://paste.yunohost.org/)
 
 
-**Shipped version:** 0.1.0~ynh8
+**Shipped version:** 0.1.0~ynh9
 
 **Demo:** http://hastebin.com/
 
@@ -45,7 +45,7 @@ The [Haste-client](https://github.com/seejohnrun/haste-client) is a simple clien
 
 ## Documentation and resources
 
-* Official app website: https://example.com
+* Official app website: http://hastebin.com/
 * Official user documentation: https://hastebin.com/about.md
 * Upstream app code repository: https://github.com/seejohnrun/haste-server
 * YunoHost documentation for this app: https://yunohost.org/app_haste
