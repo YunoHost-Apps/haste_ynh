@@ -45,7 +45,7 @@ The [Haste-client](https://github.com/seejohnrun/haste-client) is a simple clien
 
 ## Documentation and resources
 
-* Official app website: https://example.com
+* Official app website: http://hastebin.com/
 * Official user documentation: https://hastebin.com/about.md
 * Upstream app code repository: https://github.com/seejohnrun/haste-server
 * YunoHost documentation for this app: https://yunohost.org/app_haste

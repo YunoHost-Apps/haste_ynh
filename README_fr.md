@@ -42,7 +42,7 @@ Le [client Haste](https://github.com/seejohnrun/haste-client) est un client simp
 
 ## Documentations et ressources
 
-* Site officiel de l'app : https://example.com
+* Site officiel de l'app : http://hastebin.com/
 * Documentation officielle utilisateur : https://hastebin.com/about.md
 * Dépôt de code officiel de l'app : https://github.com/seejohnrun/haste-server
 * Documentation YunoHost pour cette app : https://yunohost.org/app_haste
