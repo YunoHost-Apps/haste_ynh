@@ -6,7 +6,7 @@
 		"en": "Open-source pastebin allowing to upload texts",
 		"fr": "Pastebin open-source permettant de mettre en ligne du texte"
 	},
-	"version": "0.1.0~ynh9",
+	"version": "0.1.0~ynh10",
 	"url": "http://hastebin.com/",
 	"upstream": {
         "license": "MIT",
