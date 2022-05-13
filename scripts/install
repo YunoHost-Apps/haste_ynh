@@ -128,6 +128,7 @@ chown -R $app:www-data "$data_path"
 #=================================================
 # CONFIGURE HASTE
 #=================================================
+ynh_script_progression --message="Adding a configuration file..." --weight=1
 
 ynh_add_config --template="../conf/config.js" --destination="$final_path/config.js"
 
@@ -169,6 +170,7 @@ ynh_use_logrotate
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
+ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
 yunohost service add $app --description="Haste is a pastebin software" --log="/var/log/$app/$app.log"
 
