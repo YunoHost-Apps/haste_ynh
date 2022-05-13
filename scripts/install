@@ -94,14 +94,15 @@ ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
 #=================================================
 # ADD SYSTEMD SERVICE
 #=================================================
+ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
-ynh_replace_string --match_string="__ENV_PATH__" --replace_string="$PATH" --target_file="../conf/systemd.service"
-
+env_path="$PATH"
 ynh_add_systemd_config
 
 #=================================================
 # INSTALL HASTEBIN
 #=================================================
+ynh_script_progression --message="Installing $app..." --weight=5
 
 pushd "$final_path"
 	ynh_use_nodejs
@@ -111,7 +112,7 @@ popd
 #=================================================
 # CREATE DIRECTORY FOR DATA
 #=================================================
-ynh_script_progression --message="Creating the data directory..."
+ynh_script_progression --message="Creating the data directory..." --weight=1
 
 # Define app's data directory
 data_path="/home/yunohost.app/${app}"
