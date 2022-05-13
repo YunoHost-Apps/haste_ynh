@@ -69,14 +69,9 @@ ynh_remove_logrotate
 #=================================================
 # REMOVE HASTE BINARY
 #=================================================
+ynh_script_progression --message="Removing various files..." --weight=1
 
 ynh_secure_remove --file="/usr/bin/$app"
-
-#=================================================
-# REMOVE DATADIR DIRECTORY
-#=================================================
-
-ynh_secure_remove --file="$data_path"
 
 #=================================================
 # REMOVE DATA DIR
@@ -92,6 +87,7 @@ fi
 #=================================================
 # REMOVE NODEJS
 #=================================================
+ynh_script_progression --message="Removing dependencies..." --weight=5
 
 ynh_remove_nodejs
 
