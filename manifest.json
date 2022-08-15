@@ -25,7 +25,7 @@
 		"email": "maxime.bugeia@gmail.com"
 	}],
 	"requirements": {
-		"yunohost": ">= 4.3.0"
+		"yunohost": ">= 11.0.9"
 	},
 	"multi_instance": false,
 	"services": [
