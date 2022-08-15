@@ -20,6 +20,7 @@ Haste is an open-source pastebin software written in node.js, which is easily in
 
 **Shipped version:** 0.1.0~ynh11
 
+
 **Demo:** http://hastebin.com/
 
 ## Screenshots
