@@ -57,6 +57,14 @@ port=$(ynh_find_port --port=7777)
 ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Configuring system user..." --weight=3
+
+# Create a system user
+ynh_system_user_create --username=$app --home_dir=$final_path
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=2
@@ -72,14 +80,6 @@ ynh_script_progression --message="Configuring NGINX web server..." --weight=2
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Configuring system user..." --weight=3
-
-# Create a system user
-ynh_system_user_create --username=$app --home_dir=$final_path
 
 #=================================================
 # SPECIFIC SETUP
@@ -115,7 +115,7 @@ popd
 ynh_script_progression --message="Creating the data directory..." --weight=1
 
 # Define app's data directory
-data_path="/home/yunohost.app/${app}"
+data_path=/home/yunohost.app/$app
 ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 
 # Create app folders
