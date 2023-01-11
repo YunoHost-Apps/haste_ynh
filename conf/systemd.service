@@ -1,5 +1,5 @@
 [Unit]
-Description=Haste is an open-source pastebin software
+Description=Haste: pastebin software
 After=network.target syslog.target
 
 [Service]
