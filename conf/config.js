@@ -25,7 +25,7 @@
   },
   "storage": {
     "type": "file",
-    "path": "__DATA_PATH__"
+    "path": "__DATA_DIR__"
 },
   "documents": {
     "about": "./about.md"
