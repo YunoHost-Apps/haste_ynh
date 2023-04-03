@@ -14,64 +14,64 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 # Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-domain=$YNH_APP_ARG_DOMAIN
-path_url="/"
-is_public=$YNH_APP_ARG_IS_PUBLIC
+#REMOVEME? domain=$YNH_APP_ARG_DOMAIN
+path="/"
+#REMOVEME? is_public=$YNH_APP_ARG_IS_PUBLIC
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THIS ARGS
 #=================================================
-ynh_script_progression --message="Validating installation parameters..." --weight=1
+#REMOVEME? ynh_script_progression --message="Validating installation parameters..." --weight=1
 
-final_path=/var/www/$app
-test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
+#REMOVEME? install_dir=/var/www/$app
+#REMOVEME? test ! -e "$install_dir" || ynh_die --message="This path already contains a folder"
 
 # Register (book) web path
-ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
+#REMOVEME? ynh_webpath_register --app=$app --domain=$domain --path=$path
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..." --weight=2
+#REMOVEME? ynh_script_progression --message="Storing installation settings..." --weight=2
 
-ynh_app_setting_set --app=$app --key=domain --value=$domain
-ynh_app_setting_set --app=$app --key=path_url --value=$path_url
+#REMOVEME? ynh_app_setting_set --app=$app --key=domain --value=$domain
+#REMOVEME? ynh_app_setting_set --app=$app --key=path --value=$path
 
 #=================================================
 # STANDARD MODIFICATIONS
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
-ynh_script_progression --message="Finding an available port..." --weight=2
+#REMOVEME? ynh_script_progression --message="Finding an available port..." --weight=2
 
 # Find an available port
-port=$(ynh_find_port --port=7777)
-ynh_app_setting_set --app=$app --key=port --value=$port
+#REMOVEME? port=$(ynh_find_port --port=7777)
+#REMOVEME? ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --weight=3
+#REMOVEME? ynh_script_progression --message="Configuring system user..." --weight=3
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir=$final_path
+#REMOVEME? ynh_system_user_create --username=$app --home_dir=$install_dir
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=2
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+#REMOVEME? ynh_app_setting_set --app=$app --key=install_dir --value=$install_dir
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir=$final_path
+ynh_setup_source --dest_dir=$install_dir
 
 #=================================================
 # NGINX CONFIGURATION
@@ -86,7 +86,7 @@ ynh_add_nginx_config
 #=================================================
 # INSTALL NODEJS
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=10
+#REMOVEME? ynh_script_progression --message="Installing dependencies..." --weight=10
 
 # Install Nodejs
 ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
@@ -104,7 +104,7 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Installing $app..." --weight=5
 
-pushd "$final_path"
+pushd "$install_dir"
 	ynh_use_nodejs
 	ynh_exec_warn_less $ynh_npm install
 popd
@@ -116,7 +116,7 @@ ynh_script_progression --message="Creating the data directory..." --weight=1
 
 # Define app's data directory
 data_path=/home/yunohost.app/$app
-ynh_app_setting_set --app=$app --key=data_path --value=$data_path
+#REMOVEME? ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 
 # Create app folders
 mkdir -p "$data_path"
@@ -130,18 +130,18 @@ chown -R $app:www-data "$data_path"
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
 
-ynh_add_config --template="../conf/config.js" --destination="$final_path/config.js"
+ynh_add_config --template="../conf/config.js" --destination="$install_dir/config.js"
 
 # Replace ajax.googleapis by local file
-cp ../sources/jquery.min.js "$final_path/static/jquery.min.js"
+cp ../sources/jquery.min.js "$install_dir/static/jquery.min.js"
 
-ynh_replace_string --match_string="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" --replace_string="jquery.min.js" --target_file="$final_path/static/index.html"
+ynh_replace_string --match_string="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" --replace_string="jquery.min.js" --target_file="$install_dir/static/index.html"
 
 #=================================================
 # ADD HASTE AS A BINARY FILE
 #=================================================
 
-haste_url="${domain}${path_url}"
+haste_url="${domain}${path}"
 ynh_add_config --template="../conf/haste.sh" --destination="/usr/bin/$app"
 
 #=================================================
@@ -150,9 +150,9 @@ ynh_add_config --template="../conf/haste.sh" --destination="/usr/bin/$app"
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
 chmod +x /usr/bin/$app
 
 #=================================================
@@ -185,19 +185,19 @@ ynh_systemd_action --service_name=$app --action=start --log_path="/var/log/$app/
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring permissions..." --weight=1
+#REMOVEME? ynh_script_progression --message="Configuring permissions..." --weight=1
 
-if [ $is_public -eq 1 ]
+#REMOVEME? if [ $is_public -eq 1 ]
 then
-	ynh_permission_update --permission="main" --add="visitors"
+#REMOVEME? 	ynh_permission_update --permission="main" --add="visitors"
 fi
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
-ynh_systemd_action --service_name=nginx --action=reload
+#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
