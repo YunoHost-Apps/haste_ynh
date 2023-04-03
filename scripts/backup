@@ -37,7 +37,7 @@ ynh_backup --src_path="/etc/logrotate.d/$app"
 # BACKUP DATA_DIR DIRECTORY
 #=================================================
 
-ynh_backup --src_path="$data_path" --is_big
+ynh_backup --src_path="$data_dir" --is_big
 
 #=================================================
 # BACKUP BINARY
