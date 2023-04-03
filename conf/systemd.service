@@ -1,12 +1,12 @@
 [Unit]
-Description=Haste is an open-source pastebin software
+Description=Haste: pastebin software
 After=network.target syslog.target
 
 [Service]
 Type=simple
 User=__APP__
 Group=__APP__
-WorkingDirectory=__FINALPATH__
+WorkingDirectory=__INSTALL_DIR__
 Environment="PATH=__ENV_PATH__"
 ExecStart=__YNH_NPM__ start
 StandardOutput=append:/var/log/__APP__/__APP__.log

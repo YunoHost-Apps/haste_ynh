@@ -1,0 +1,58 @@
+packaging_format = 2
+
+id = "haste"
+name = "Haste"
+description.en = "Open-source pastebin allowing to upload texts"
+description.fr = "Pastebin open-source permettant de mettre en ligne du texte"
+
+version = "0.1.0~ynh14"
+
+maintainers = ["eric_G"]
+
+[upstream]
+license = "MIT"
+website = "http://hastebin.com/"
+demo = "http://hastebin.com/"
+userdoc = "https://hastebin.com/about.md"
+code = "https://github.com/seejohnrun/haste-server"
+
+[integration]
+yunohost = ">= 11.1.16"
+architectures = "all"
+multi_instance = false
+ldap = false
+sso = true
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    help.en = "Haste can only be installed in a root domain or subdomain"
+    help.fr = "Haste ne peut être installé que dans un domaine racine ou un sous-domaine"
+    type = "domain"
+    full_domain = true
+
+    [install.init_main_permission]
+    help.en = "If enabled, Haste will be accessible by people who do not have an account. This can be changed later via the webadmin."
+    help.fr = "Si cette case est cochée, Haste sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
+    type = "group"
+    default = "visitors"
+
+[resources]
+        [resources.sources.main]
+        url = "https://github.com/seejohnrun/haste-server/archive/7c65fb2f9b2e4b292e03c5d70957431bcc27d2c0.tar.gz"
+        sha256 = "8d420e2b47a640b38230114551ddffe86489cb6607af0659740385e6a9e36ebd"
+        autoupdate.upstream = "https://github.com/seejohnrun/haste-server/"
+        autoupdate.strategy = "latest_github_commit"
+
+    [resources.ports]
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+
+    [resources.permissions]
+    main.url = "/"

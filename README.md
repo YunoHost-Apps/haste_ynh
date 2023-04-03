@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Haste for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/haste.svg)](https://dash.yunohost.org/appci/app/haste) ![Working status](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/haste.svg)](https://dash.yunohost.org/appci/app/haste) ![Working status](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)
+
 [![Install Haste with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=haste)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -18,30 +19,13 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 Haste is an open-source pastebin software written in node.js, which is easily installable in any network. YunoHost Project uses Haste as pastebin for log sharing: [paste.yunohost.org](https://paste.yunohost.org/)
 
 
-**Shipped version:** 0.1.0~ynh13
+**Shipped version:** 0.1.0~ynh14
 
 **Demo:** http://hastebin.com/
 
 ## Screenshots
 
 ![Screenshot of Haste](./doc/screenshots/screenshot.png)
-
-## Disclaimers / important information
-
-#### Multi-user support
-
-* Are LDAP and HTTP auth supported? **No**
-* Can the app be used by multiple users? **Yes**
-
-## `haste` command
-
-This Haste package for Yunohost includes the [`haste` command](https://github.com/diethnis/standalones/blob/master/hastebin.sh), allowing you to share content from terminal:
-
-```bash
-cat something | haste
-https://haste.example.com/zuyejeduzu
-```
-The [Haste-client](https://github.com/seejohnrun/haste-client) is a simple client for uploading data to you Haste server. 
 
 ## Documentation and resources
 
