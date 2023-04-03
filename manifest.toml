@@ -5,7 +5,7 @@ name = "Haste"
 description.en = "Open-source pastebin allowing to upload texts"
 description.fr = "Pastebin open-source permettant de mettre en ligne du texte"
 
-version = "0.1.0~ynh13"
+version = "0.1.0~ynh14"
 
 maintainers = ["eric_G"]
 
