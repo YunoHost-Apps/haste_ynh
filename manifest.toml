@@ -43,8 +43,8 @@ ram.runtime = "50M"
         [resources.sources.main]
         url = "https://github.com/seejohnrun/haste-server/archive/7c65fb2f9b2e4b292e03c5d70957431bcc27d2c0.tar.gz"
         sha256 = "8d420e2b47a640b38230114551ddffe86489cb6607af0659740385e6a9e36ebd"
-        autoupdate.upstream = "https://github.com/seejohnrun/haste-server/"
         autoupdate.strategy = "latest_github_commit"
+        autoupdate.force_version = "0.1.%Y.%m.%d"
 
     [resources.ports]
 
