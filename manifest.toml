@@ -5,7 +5,7 @@ name = "Haste"
 description.en = "Open-source pastebin allowing to upload texts"
 description.fr = "Pastebin open-source permettant de mettre en ligne du texte"
 
-version = "0.1.0~ynh14"
+version = "0.1.2023.03.06~ynh1"
 
 maintainers = ["eric_G"]
 
@@ -41,10 +41,10 @@ ram.runtime = "50M"
 
 [resources]
         [resources.sources.main]
-        url = "https://github.com/seejohnrun/haste-server/archive/7c65fb2f9b2e4b292e03c5d70957431bcc27d2c0.tar.gz"
-        sha256 = "8d420e2b47a640b38230114551ddffe86489cb6607af0659740385e6a9e36ebd"
-        autoupdate.upstream = "https://github.com/seejohnrun/haste-server/"
+        url = "https://github.com/seejohnrun/haste-server/archive/b52b394bad909ddf151073987671e843540d91d6.tar.gz"
+        sha256 = "c9e70ded0cb205a91448d5102d043831679271229deaee37dd69167c652d5d1d"
         autoupdate.strategy = "latest_github_commit"
+        autoupdate.force_version = "0.1.%Y.%m.%d"
 
     [resources.ports]
 
