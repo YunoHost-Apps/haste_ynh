@@ -17,7 +17,7 @@ userdoc = "https://hastebin.com/about.md"
 code = "https://github.com/seejohnrun/haste-server"
 
 [integration]
-yunohost = ">= 11.1.16"
+yunohost = ">= 11.1.19"
 architectures = "all"
 multi_instance = false
 ldap = false
