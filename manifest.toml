@@ -31,7 +31,6 @@ ram.runtime = "50M"
     help.en = "Haste can only be installed in a root domain or subdomain"
     help.fr = "Haste ne peut être installé que dans un domaine racine ou un sous-domaine"
     type = "domain"
-    full_domain = true
 
     [install.init_main_permission]
     help.en = "If enabled, Haste will be accessible by people who do not have an account. This can be changed later via the webadmin."
