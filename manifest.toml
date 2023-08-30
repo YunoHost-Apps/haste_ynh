@@ -28,8 +28,6 @@ ram.runtime = "50M"
 
 [install]
     [install.domain]
-    help.en = "Haste can only be installed in a root domain or subdomain"
-    help.fr = "Haste ne peut être installé que dans un domaine racine ou un sous-domaine"
     type = "domain"
 
     [install.init_main_permission]
