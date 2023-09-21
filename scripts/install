@@ -30,7 +30,7 @@ ynh_add_nginx_config
 #=================================================
 # INSTALL NODEJS
 #=================================================
-#REMOVEME? ynh_script_progression --message="Installing dependencies..." --weight=10
+ynh_script_progression --message="Installing dependencies..." --weight=10
 
 # Install Nodejs
 ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
