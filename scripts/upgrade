@@ -35,6 +35,13 @@ then
 fi
 
 #=================================================
+# UPGRADE NODEJS
+#=================================================
+ynh_script_progression --message="Upgrading dependencies..." --weight=8
+
+ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
+
+#=================================================
 # NGINX CONFIGURATION
 #=================================================
 ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=2
@@ -42,14 +49,13 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
-#=================================================
-# SPECIFIC UPGRADE
-#=================================================
-# UPGRADE NODEJS
-#=================================================
-ynh_script_progression --message="Upgrading dependencies..." --weight=8
+# FIXME Currently, the log is only redirected to syslog.
+ynh_use_logrotate --non-append
 
-ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
+env_path="$PATH"
+ynh_add_systemd_config
+
+yunohost service add $app --description="Haste is a pastebin software" --log="/var/log/$app/$app.log"
 
 #=================================================
 # UPGRADE NPM MODULES
@@ -60,22 +66,6 @@ pushd "$install_dir"
 	ynh_use_nodejs
 	ynh_exec_warn_less $ynh_npm install
 popd
-
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..." --weight=1
-
-# FIXME Currently, the log is only redirected to syslog.
-ynh_use_logrotate --non-append
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
-
-env_path="$PATH"
-ynh_add_systemd_config
 
 #=================================================
 # UPGRADE HASTE CONFIGURATION
@@ -92,7 +82,7 @@ ynh_replace_string --match_string="https://ajax.googleapis.com/ajax/libs/jquery/
 ynh_script_progression --message="Updating a configuration file..." --weight=1
 
 haste_url="${domain}${path}"
-ynh_add_config --template="../conf/haste.sh" --destination="/usr/bin/$app"
+ynh_add_config --template="haste.sh" --destination="/usr/bin/$app"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -104,13 +94,6 @@ chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
 chmod +x /usr/bin/$app
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
-
-yunohost service add $app --description="Haste is a pastebin software" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
