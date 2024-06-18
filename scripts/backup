@@ -22,32 +22,20 @@ ynh_print_info --message="Declaring files to be backed up..."
 ynh_backup --src_path="$install_dir"
 
 #=================================================
-# BACKUP THE NGINX CONFIGURATION
-#=================================================
-
-ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
-
-#=================================================
-# BACKUP LOGROTATE
-#=================================================
-
-ynh_backup --src_path="/etc/logrotate.d/$app"
-
-#=================================================
 # BACKUP DATA_DIR DIRECTORY
 #=================================================
 
 ynh_backup --src_path="$data_dir" --is_big
 
 #=================================================
-# BACKUP BINARY
+# SYSTEM CONFIGURATION
 #=================================================
+
+ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
+
+ynh_backup --src_path="/etc/logrotate.d/$app"
 
 ynh_backup --src_path="/usr/bin/$app"
-
-#=================================================
-# BACKUP SYSTEMD
-#=================================================
 
 ynh_backup --src_path="/etc/systemd/system/$app.service"
 
