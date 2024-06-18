@@ -14,7 +14,7 @@ license = "MIT"
 website = "http://hastebin.com/"
 demo = "http://hastebin.com/"
 userdoc = "https://hastebin.com/about.md"
-code = "https://github.com/seejohnrun/haste-server"
+code = "https://github.com/toptal/haste-server"
 
 [integration]
 yunohost = ">= 11.2"
@@ -41,8 +41,8 @@ ram.runtime = "50M"
 
 [resources]
         [resources.sources.main]
-        url = "https://github.com/seejohnrun/haste-server/archive/ded18b0c2e1ad05eaba6ab5bb938ae6b54cb5147.tar.gz"
-        sha256 = "2f4ac83e9fe2f78b4b48d3999cfbc879ed29fd15d5c1d21c316ef66ddfde89f1"
+        url = "https://github.com/toptal/haste-server/archive/87a6a88449db1e1e048bf58223038b8df83846c8.tar.gz"
+        sha256 = "729cdff777daa04ccc277670a94e2e8e5d7bf4cd1bf63730d3436bca5d05dd6d"
         autoupdate.strategy = "latest_github_commit"
         autoupdate.force_version = "0.1.%Y.%m.%d"
 
