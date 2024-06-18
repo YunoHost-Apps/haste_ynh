@@ -33,7 +33,6 @@ ynh_script_progression --message="Configuring NGINX web server..." --weight=2
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
-env_path="$PATH"
 ynh_add_systemd_config
 
 # FIXME Currently, the log is only redirected to syslog.
