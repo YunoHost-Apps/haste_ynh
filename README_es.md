@@ -31,7 +31,7 @@ Haste is an open-source pastebin software written in node.js, which is easily in
 
 - Sitio web oficial: <http://hastebin.com/>
 - Documentación usuario oficial: <https://hastebin.com/about.md>
-- Repositorio del código fuente oficial de la aplicación : <https://github.com/seejohnrun/haste-server>
+- Repositorio del código fuente oficial de la aplicación : <https://github.com/toptal/haste-server>
 - Catálogo YunoHost: <https://apps.yunohost.org/app/haste>
 - Reportar un error: <https://github.com/YunoHost-Apps/haste_ynh/issues>
 
