@@ -56,15 +56,14 @@ cp ../sources/jquery.min.js "$install_dir/static/jquery.min.js"
 
 ynh_replace_string --match_string="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" --replace_string="jquery.min.js" --target_file="$install_dir/static/index.html"
 
-#=================================================
-# INSTALL HASTEBIN
-#=================================================
-ynh_script_progression --message="Installing $app..." --weight=5
+# FIXME Currently, the log is only redirected to syslog.
+mkdir -p /var/log/$app
+touch /var/log/$app/$app.log
+chown $app -R /var/log/$app
 
-pushd "$install_dir"
-	ynh_use_nodejs
-	ynh_exec_warn_less $ynh_npm install
-popd
+ynh_use_logrotate
+
+yunohost service add $app --description="Haste is a pastebin software" --log="/var/log/$app/$app.log"
 
 #=================================================
 # ADD HASTE AS A BINARY FILE
