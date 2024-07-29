@@ -5,7 +5,7 @@ name = "Haste"
 description.en = "Open-source pastebin allowing to upload texts"
 description.fr = "Pastebin open-source permettant de mettre en ligne du texte"
 
-version = "0.1.2023.09.21~ynh2"
+version = "0.1.2024.07.26~ynh1"
 
 maintainers = ["eric_G"]
 
@@ -41,8 +41,8 @@ ram.runtime = "50M"
 
 [resources]
         [resources.sources.main]
-        url = "https://github.com/toptal/haste-server/archive/87a6a88449db1e1e048bf58223038b8df83846c8.tar.gz"
-        sha256 = "729cdff777daa04ccc277670a94e2e8e5d7bf4cd1bf63730d3436bca5d05dd6d"
+        url = "https://github.com/toptal/haste-server/archive/a56763258b9a4a8fd589484351f027599a4f3515.tar.gz"
+        sha256 = "047abbe159e3a8f68d53937f052bdcfdaa86ff831ef04a545950464b26cdfd5c"
         autoupdate.strategy = "latest_github_commit"
         autoupdate.force_version = "0.1.%Y.%m.%d"
 
