@@ -5,7 +5,7 @@ NON debe editarse manualmente.
 
 # Haste para YunoHost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/haste.svg)](https://dash.yunohost.org/appci/app/haste) ![Estado de funcionamento](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![Estado de mantemento](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/haste.svg)](https://ci-apps.yunohost.org/ci/apps/haste/) ![Estado de funcionamento](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![Estado de mantemento](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)
 
 [![Instalar Haste con YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=haste)
 
@@ -19,7 +19,7 @@ NON debe editarse manualmente.
 Haste is an open-source pastebin software written in node.js, which is easily installable in any network. YunoHost Project uses Haste as pastebin for log sharing: [paste.yunohost.org](https://paste.yunohost.org/)
 
 
-**Versión proporcionada:** 0.1.2023.09.21~ynh2
+**Versión proporcionada:** 0.1.2024.07.26~ynh1
 
 **Demo:** <http://hastebin.com/>
 
