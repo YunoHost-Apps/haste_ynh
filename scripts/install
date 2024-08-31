@@ -53,7 +53,7 @@ ynh_replace --match="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.m
 ynh_script_progression "Installing $app..."
 
 pushd "$install_dir"
-	ynh_hide_warnings $ynh_npm install
+	ynh_hide_warnings npm install
 popd
 
 #=================================================
