@@ -25,7 +25,6 @@ ynh_script_progression "Configuring NGINX web server..."
 
 ynh_config_add_nginx
 
-env_path="$PATH"
 ynh_config_add_systemd
 
 mkdir -p /var/log/$app
@@ -53,7 +52,7 @@ ynh_replace --match="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.m
 ynh_script_progression "Installing $app..."
 
 pushd "$install_dir"
-	ynh_hide_warnings npm install
+	ynh_hide_warnings ynh_exec_as_app npm install
 popd
 
 #=================================================
