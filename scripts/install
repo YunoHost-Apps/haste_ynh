@@ -16,7 +16,6 @@ ynh_nodejs_install
 #=================================================
 ynh_script_progression "Setting up source files..."
 
-# Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir=$install_dir
 
 #=================================================
@@ -24,16 +23,13 @@ ynh_setup_source --dest_dir=$install_dir
 #=================================================
 ynh_script_progression "Configuring NGINX web server..."
 
-# Create a dedicated NGINX config
 ynh_config_add_nginx
 
 env_path="$PATH"
 ynh_config_add_systemd
 
-# FIXME Currently, the log is only redirected to syslog.
 mkdir -p /var/log/$app
 touch /var/log/$app/$app.log
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app -R /var/log/$app
 
 ynh_config_add_logrotate
 
@@ -57,8 +53,7 @@ ynh_replace --match="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.m
 ynh_script_progression "Installing $app..."
 
 pushd "$install_dir"
-
-	ynh_hide_warnings npm install
+	ynh_hide_warnings $ynh_npm install
 popd
 
 #=================================================
@@ -72,9 +67,6 @@ ynh_config_add --template="haste.sh" --destination="/usr/bin/$app"
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
 chmod +x /usr/bin/$app
 
 #=================================================
