@@ -1,60 +1,50 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --weight=1
+ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
+ynh_systemctl --service=$app --action="stop"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Upgrading source files..." --weight=7
+ynh_script_progression "Upgrading source files..."
 
-# Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir" --keep="config.js"
 
 #=================================================
 # UPGRADE NODEJS
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..." --weight=8
+ynh_script_progression "Upgrading dependencies..."
 
-ynh_exec_warn_less ynh_install_nodejs --nodejs_version=$nodejs_version
+ynh_nodejs_install
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=2
+ynh_script_progression "Upgrading NGINX web server configuration..."
 
-# Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
-# FIXME Currently, the log is only redirected to syslog.
-ynh_use_logrotate --non-append
+ynh_config_add_logrotate
 
 env_path="$PATH"
-ynh_add_systemd_config
+ynh_config_add_systemd
 
 yunohost service add $app --description="Haste is a pastebin software" --log="/var/log/$app/$app.log"
 
 #=================================================
 # UPGRADE NPM MODULES
 #=================================================
-ynh_script_progression --message="Installing $app..." --weight=8
+ynh_script_progression "Installing $app..."
 
 pushd "$install_dir"
-	ynh_use_nodejs
-	ynh_exec_warn_less $ynh_npm install
+	ynh_hide_warnings $ynh_npm install
 popd
 
 #=================================================
@@ -64,36 +54,31 @@ popd
 # Replace ajax.googleapis by local file
 cp ../sources/jquery.min.js "$install_dir/static/jquery.min.js"
 
-ynh_replace_string --match_string="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" --replace_string="jquery.min.js" --target_file="$install_dir/static/index.html"
+ynh_replace --match="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" --replace="jquery.min.js" --file="$install_dir/static/index.html"
 
 #=================================================
 # UPGRADE HASTE BINARY
 #=================================================
-ynh_script_progression --message="Updating a configuration file..." --weight=1
+ynh_script_progression "Updating configuration..."
 
 haste_url="${domain}${path}"
-ynh_add_config --template="haste.sh" --destination="/usr/bin/$app"
+ynh_config_add --template="haste.sh" --destination="/usr/bin/$app"
 
-#=================================================
-# GENERIC FINALIZATION
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:www-data "$install_dir"
 chmod +x /usr/bin/$app
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=1
+ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemd_action --service_name=$app --action=start --log_path="/var/log/$app/$app.log"
+ynh_systemctl --service=$app --action=start
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --last
+ynh_script_progression "Upgrade of $app completed"
