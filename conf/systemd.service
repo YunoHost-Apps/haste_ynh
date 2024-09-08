@@ -7,8 +7,8 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__
-Environment="PATH=__ENV_PATH__"
-ExecStart=__YNH_NPM__ start
+Environment="PATH=__PATH_WITH_NODEJS__"
+ExecStart=__NODEJS_DIR__/npm start
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 Restart=always
