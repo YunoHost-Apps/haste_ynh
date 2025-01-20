@@ -5,7 +5,9 @@ No se debe editar a mano.
 
 # Haste para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/haste.svg)](https://ci-apps.yunohost.org/ci/apps/haste/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)
+[![Nivel de integración](https://apps.yunohost.org/badge/integration/haste)](https://ci-apps.yunohost.org/ci/apps/haste/)
+![Estado funcional](https://apps.yunohost.org/badge/state/haste)
+![Estado En Mantención](https://apps.yunohost.org/badge/maintained/haste)
 
 [![Instalar Haste con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=haste)
 
@@ -37,7 +39,7 @@ Haste is an open-source pastebin software written in node.js, which is easily in
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/haste_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/haste_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 
