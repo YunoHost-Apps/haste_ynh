@@ -5,7 +5,9 @@ NON debe editarse manualmente.
 
 # Haste para YunoHost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/haste.svg)](https://ci-apps.yunohost.org/ci/apps/haste/) ![Estado de funcionamento](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![Estado de mantemento](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)
+[![Nivel de integración](https://apps.yunohost.org/badge/integration/haste)](https://ci-apps.yunohost.org/ci/apps/haste/)
+![Estado de funcionamento](https://apps.yunohost.org/badge/state/haste)
+![Estado de mantemento](https://apps.yunohost.org/badge/maintained/haste)
 
 [![Instalar Haste con YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=haste)
 

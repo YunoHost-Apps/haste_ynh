@@ -5,7 +5,9 @@ Ini TIDAK boleh diedit dengan tangan.
 
 # Haste untuk YunoHost
 
-[![Tingkat integrasi](https://dash.yunohost.org/integration/haste.svg)](https://ci-apps.yunohost.org/ci/apps/haste/) ![Status kerja](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![Status pemeliharaan](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)
+[![Tingkat integrasi](https://apps.yunohost.org/badge/integration/haste)](https://ci-apps.yunohost.org/ci/apps/haste/)
+![Status kerja](https://apps.yunohost.org/badge/state/haste)
+![Status pemeliharaan](https://apps.yunohost.org/badge/maintained/haste)
 
 [![Pasang Haste dengan YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=haste)
 
