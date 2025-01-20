@@ -5,7 +5,9 @@
 
 # Haste для YunoHost
 
-[![Уровень интеграции](https://dash.yunohost.org/integration/haste.svg)](https://ci-apps.yunohost.org/ci/apps/haste/) ![Состояние работы](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![Состояние сопровождения](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)
+[![Уровень интеграции](https://apps.yunohost.org/badge/integration/haste)](https://ci-apps.yunohost.org/ci/apps/haste/)
+![Состояние работы](https://apps.yunohost.org/badge/state/haste)
+![Состояние сопровождения](https://apps.yunohost.org/badge/maintained/haste)
 
 [![Установите Haste с YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=haste)
 

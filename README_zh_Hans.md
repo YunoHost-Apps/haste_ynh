@@ -5,7 +5,9 @@
 
 # YunoHost 上的 Haste
 
-[![集成程度](https://dash.yunohost.org/integration/haste.svg)](https://ci-apps.yunohost.org/ci/apps/haste/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/haste.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/haste.maintain.svg)
+[![集成程度](https://apps.yunohost.org/badge/integration/haste)](https://ci-apps.yunohost.org/ci/apps/haste/)
+![工作状态](https://apps.yunohost.org/badge/state/haste)
+![维护状态](https://apps.yunohost.org/badge/maintained/haste)
 
 [![使用 YunoHost 安装 Haste](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=haste)
 
