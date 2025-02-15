@@ -7,7 +7,7 @@ description.fr = "Pastebin open-source permettant de mettre en ligne du texte"
 
 version = "0.1.2024.07.26~ynh2"
 
-maintainers = ["eric_G"]
+maintainers = []
 
 [upstream]
 license = "MIT"
