@@ -5,9 +5,9 @@ name = "Haste"
 description.en = "Open-source pastebin allowing to upload texts"
 description.fr = "Pastebin open-source permettant de mettre en ligne du texte"
 
-version = "0.1.2024.07.26~ynh2"
+version = "0.1.0~ynh3"
 
-maintainers = ["eric_G"]
+maintainers = []
 
 [upstream]
 license = "MIT"
@@ -17,13 +17,12 @@ userdoc = "https://hastebin.com/about.md"
 code = "https://github.com/toptal/haste-server"
 
 [integration]
-yunohost = ">= 11.2.30"
+yunohost = ">= 12.0.9"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
 
 ldap = false
-
 sso = true
 
 disk = "50M"
@@ -42,10 +41,8 @@ ram.runtime = "50M"
 
 [resources]
         [resources.sources.main]
-        url = "https://github.com/toptal/haste-server/archive/a56763258b9a4a8fd589484351f027599a4f3515.tar.gz"
-        sha256 = "047abbe159e3a8f68d53937f052bdcfdaa86ff831ef04a545950464b26cdfd5c"
-        autoupdate.strategy = "latest_github_commit"
-        autoupdate.force_version = "0.1.%Y.%m.%d"
+        url = "https://github.com/YunoHost-Apps/haste_ynh/releases/download/0.1.0/haste-server-master.zip"
+        sha256 = "614a6c2089143c614ee51443a87b12767ed10ec7d780a0ff90fc20e03f927287"
 
     [resources.ports]
 

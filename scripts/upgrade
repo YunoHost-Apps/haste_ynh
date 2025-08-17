@@ -60,7 +60,6 @@ ynh_replace --match="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.m
 #=================================================
 ynh_script_progression "Updating configuration..."
 
-haste_url="${domain}${path}"
 ynh_config_add --template="haste.sh" --destination="/usr/bin/$app"
 
 #=================================================

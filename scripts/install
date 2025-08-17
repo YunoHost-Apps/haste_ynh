@@ -58,7 +58,6 @@ popd
 # ADD HASTE AS A BINARY FILE
 #=================================================
 
-haste_url="${domain}${path}"
 ynh_config_add --template="haste.sh" --destination="/usr/bin/$app"
 
 #=================================================
