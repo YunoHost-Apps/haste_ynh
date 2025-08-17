@@ -42,7 +42,7 @@ ram.runtime = "50M"
 [resources]
         [resources.sources.main]
         url = "https://github.com/YunoHost-Apps/haste_ynh/archive/refs/tags/0.1.0.tar.gz"
-        sha256 = "e95dde1457ee310bc3a197f7ddfe9dd217ef255df6be4625adcdc959958e6291"
+        sha256 = "614a6c2089143c614ee51443a87b12767ed10ec7d780a0ff90fc20e03f927287"
 
     [resources.ports]
 
