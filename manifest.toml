@@ -41,7 +41,7 @@ ram.runtime = "50M"
 
 [resources]
         [resources.sources.main]
-        url = "https://github.com/YunoHost-Apps/haste_ynh/archive/refs/tags/0.1.0.tar.gz"
+        url = "https://github.com/YunoHost-Apps/haste_ynh/releases/download/0.1.0/haste-server-master.zip"
         sha256 = "614a6c2089143c614ee51443a87b12767ed10ec7d780a0ff90fc20e03f927287"
 
     [resources.ports]
