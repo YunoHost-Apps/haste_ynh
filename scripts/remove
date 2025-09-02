@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source _common.sh
+
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -20,7 +20,7 @@ ynh_config_remove_logrotate
 
 ynh_safe_rm "/usr/bin/$app"
 
-ynh_nodejs_remove
+#REMOVEME? ynh_nodejs_remove
 
 #=================================================
 # END OF SCRIPT
