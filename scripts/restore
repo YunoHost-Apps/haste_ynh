@@ -1,14 +1,6 @@
 #!/bin/bash
 
-
 source /usr/share/yunohost/helpers
-
-#=================================================
-# INSTALL NODEJS
-#=================================================
-ynh_script_progression "Reinstalling dependencies..."
-
-#REMOVEME? ynh_nodejs_install
 
 #=================================================
 # RESTORE THE APP MAIN DIR
